@@ -8,8 +8,11 @@ and Three.js only**. No build step, no framework.
 
 ## Features
 
-- Reigen's head, face (half-lidded "unimpressed" eyes, smug mouth, brows, nose,
-  ears), side-parted swept-back hair, and a suit + red tie bust.
+- **Cel-shaded (toon) look** with inked outlines for a Mob Psycho 100 feel.
+- A **sculpted head** (brow ridge, cheekbones, eye sockets, defined jaw/chin)
+  rather than a plain ball — plus detailed eyes (iris, pupil, catchlight, the
+  signature sharp eye-line and heavy lids), a structured nose, lips, brows and
+  ears, slicked-back strand-by-strand hair, and a suit with lapels + red tie.
 - **7 camera shots** you can switch between with a smooth tween:
   front, 3/4 view, side profile, face close-up, "the stare", hair/top, low hero.
 - Orbit with the mouse (drag to rotate, scroll to zoom) and an auto-rotate toggle.

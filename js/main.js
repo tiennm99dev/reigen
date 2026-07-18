@@ -18,8 +18,15 @@ renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
 // --- Scene ------------------------------------------------------------------
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x14141a);
-scene.fog = new THREE.Fog(0x14141a, 10, 22);
+scene.background = new THREE.Color(0x1b1d26);
+scene.fog = new THREE.Fog(0x1b1d26, 12, 26);
+
+// Soft radial studio backdrop so the cel-shaded figure pops.
+const backdrop = new THREE.Mesh(
+  new THREE.SphereGeometry(40, 32, 32),
+  new THREE.MeshBasicMaterial({ color: 0x262a38, side: THREE.BackSide })
+);
+scene.add(backdrop);
 
 // --- Camera -----------------------------------------------------------------
 const camera = new THREE.PerspectiveCamera(
@@ -30,21 +37,22 @@ const camera = new THREE.PerspectiveCamera(
 );
 camera.position.copy(SHOTS[0].position);
 
-// --- Lighting: warm key + cool rim for that anime portrait feel -------------
-const ambient = new THREE.AmbientLight(0xffffff, 0.55);
+// --- Lighting: flat-ish ambient so toon bands read + warm key + cool rim ----
+const ambient = new THREE.AmbientLight(0xffffff, 0.7);
 scene.add(ambient);
 
-const key = new THREE.DirectionalLight(0xfff2d6, 1.5);
+const key = new THREE.DirectionalLight(0xfff2d6, 2.1);
 key.position.set(4, 6, 6);
 key.castShadow = true;
-key.shadow.mapSize.set(1024, 1024);
+key.shadow.mapSize.set(2048, 2048);
+key.shadow.bias = -0.0005;
 scene.add(key);
 
-const rim = new THREE.DirectionalLight(0x6fa8ff, 0.8);
+const rim = new THREE.DirectionalLight(0x7fb0ff, 1.1);
 rim.position.set(-5, 2, -4);
 scene.add(rim);
 
-const fill = new THREE.PointLight(0xffd9a0, 0.6, 30);
+const fill = new THREE.PointLight(0xffd9a0, 0.5, 30);
 fill.position.set(-3, -2, 4);
 scene.add(fill);
 
