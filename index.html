@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Reigen Arataka — Three.js</title>
+    <link rel="stylesheet" href="./css/style.css" />
+    <!-- Three.js is loaded via an import map so main.js can `import ... from "three"` -->
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+          "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="app">
+      <canvas id="scene"></canvas>
+
+      <header id="titlebar">
+        <h1>霊幻 新隆 &middot; Reigen Arataka</h1>
+        <p>The Greatest Psychic of the 21st Century — built with Three.js</p>
+      </header>
+
+      <div id="shot-bar" role="toolbar" aria-label="Camera shots"></div>
+
+      <footer id="hint">
+        <span>Drag to orbit &middot; scroll to zoom</span>
+        <label><input type="checkbox" id="auto-rotate" /> Auto-rotate</label>
+      </footer>
+    </div>
+
+    <script type="module" src="./js/main.js"></script>
+  </body>
+</html>
