@@ -1,59 +1,22 @@
-// Named camera shots for framing Reigen. Each shot defines where the camera
-// sits and where it looks. main.js tweens between them when a button is pressed.
-import * as THREE from "three";
-
+// 2D framing presets for the flat Reigen portrait. Each "shot" is an
+// orthographic zoom + pan (screen-space center), tweened when selected.
 /**
  * @typedef {Object} Shot
  * @property {string} id
  * @property {string} label
- * @property {THREE.Vector3} position - camera position
- * @property {THREE.Vector3} target   - orbit/look-at target
+ * @property {number} zoom     - orthographic zoom (higher = closer)
+ * @property {number} cx       - camera center x (world units)
+ * @property {number} cy       - camera center y (world units)
  */
 
 /** @type {Shot[]} */
 export const SHOTS = [
-  {
-    id: "front",
-    label: "① Front",
-    position: new THREE.Vector3(0, 0.2, 6.2),
-    target: new THREE.Vector3(0, 0, 0),
-  },
-  {
-    id: "three-quarter",
-    label: "② 3/4 View",
-    position: new THREE.Vector3(3.8, 0.6, 4.8),
-    target: new THREE.Vector3(0, 0, 0),
-  },
-  {
-    id: "profile",
-    label: "③ Side Profile",
-    position: new THREE.Vector3(6.0, 0.1, 0.4),
-    target: new THREE.Vector3(0, -0.1, 0),
-  },
-  {
-    id: "face-closeup",
-    label: "④ Face Close-up",
-    position: new THREE.Vector3(0, 0.25, 3.2),
-    target: new THREE.Vector3(0, 0.15, 0.4),
-  },
-  {
-    id: "eyes",
-    label: "⑤ The Stare",
-    position: new THREE.Vector3(1.1, 0.3, 2.6),
-    target: new THREE.Vector3(0, 0.2, 0.6),
-  },
-  {
-    id: "hair-top",
-    label: "⑥ Hair / Top",
-    position: new THREE.Vector3(0.2, 4.6, 3.2),
-    target: new THREE.Vector3(0, 0.7, 0),
-  },
-  {
-    id: "low-hero",
-    label: "⑦ Low Hero",
-    position: new THREE.Vector3(-2.6, -2.2, 5.0),
-    target: new THREE.Vector3(0, 0.1, 0),
-  },
+  { id: "full", label: "① Full", zoom: 1.0, cx: 0, cy: -0.3 },
+  { id: "portrait", label: "② Portrait", zoom: 1.35, cx: 0, cy: 0.05 },
+  { id: "face", label: "③ Face", zoom: 1.9, cx: 0, cy: 0.15 },
+  { id: "eyes", label: "④ The Stare", zoom: 3.0, cx: 0, cy: 0.15 },
+  { id: "hair", label: "⑤ Hair", zoom: 1.6, cx: 0, cy: 0.9 },
+  { id: "smirk", label: "⑥ Smirk", zoom: 3.0, cx: 0, cy: -0.55 },
 ];
 
 export function getShot(id) {
