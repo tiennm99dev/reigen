@@ -5,23 +5,24 @@
 
 import * as THREE from "three";
 
-// --- Palette (light ash-tan slicked hair, light suit, dark shirt, red tie) --
+// --- Palette (per the Mob Psycho 100 wiki: reddish-blond hair, dark-brown
+// eyes, dark-grey suit, black shirt, pink tie). ------------------------------
 export const C = {
   outline: 0x241c15,
   skin: 0xf4cfa6,
   skinShade: 0xe4b487,
-  hair: 0xb59a6b,
-  hairLine: 0xa2864f,
-  hairShade: 0x8f7647,
+  hair: 0xcf9a54, // reddish-blond
+  hairLine: 0xbd8640,
+  hairShade: 0xa06f2c,
   white: 0xfbf8f1,
-  iris: 0x6d5636,
+  iris: 0x43301f, // dark brown
   dark: 0x241c15,
-  brow: 0x6b5433,
+  brow: 0x5a3f24,
   mouth: 0x9a5b4c,
-  jacket: 0xcabfae,
-  jacketShade: 0xb2a691,
-  shirt: 0x33333c,
-  tie: 0x8f2f2f,
+  jacket: 0x474a54, // dark grey suit
+  jacketShade: 0x383b43,
+  shirt: 0x201f24, // black shirt
+  tie: 0xd05c86, // pink tie
 };
 
 // Author a closed polygon from [x,y] pairs.

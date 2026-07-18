@@ -137,6 +137,32 @@ body {
   font-size: 0.74rem;
 }
 
+#disclaimer {
+  position: absolute;
+  bottom: 6px;
+  right: 12px;
+  left: 12px;
+  max-width: 640px;
+  margin-left: auto;
+  text-align: right;
+  font-size: 0.62rem;
+  line-height: 1.4;
+  color: rgba(28, 26, 23, 0.55);
+  z-index: 4;
+  pointer-events: auto;
+}
+
+#disclaimer a {
+  color: rgba(28, 26, 23, 0.72);
+}
+
+@media (max-width: 620px) {
+  #disclaimer {
+    text-align: center;
+    font-size: 0.56rem;
+  }
+}
+
 @media (max-width: 620px) {
   #shot-bar {
     top: auto;

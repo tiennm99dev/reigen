@@ -57,3 +57,16 @@ Three.js is loaded from a CDN via the import map in `index.html`.
 Pushing to `main` triggers the GitHub Actions workflow
 (`.github/workflows/deploy-pages.yml`), which publishes the repo root to GitHub
 Pages. Enable Pages once under **Settings → Pages → Source: GitHub Actions**.
+
+## Disclaimer
+
+This is a **fan-made, non-commercial** project — an original point-art
+interpretation of the character, informed by appearance details from the
+[Mob Psycho 100 wiki](https://mob-psycho-100.fandom.com/wiki/Arataka_Reigen)
+(reddish-blond hair, dark-brown eyes, dark-grey suit, black shirt, pink tie).
+No official artwork or images were copied or traced.
+
+Reigen Arataka and *Mob Psycho 100* are © ONE / Shogakukan / BONES. This
+project is not affiliated with or endorsed by the rights holders. If you are a
+rights holder with a licensing concern, please contact the author at
+[github.com/tiennm99](https://github.com/tiennm99).
