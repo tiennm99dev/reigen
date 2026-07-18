@@ -201,6 +201,22 @@ const fileInput = document.getElementById("image-input");
 document.getElementById("load-btn").addEventListener("click", () => fileInput.click());
 fileInput.addEventListener("change", () => useImageFile(fileInput.files[0]));
 
+// Load from a pasted image URL (fetched client-side; needs the host to allow
+// cross-origin reads). Nothing is stored or published by this project.
+const urlInput = document.getElementById("url-input");
+async function useImageURL() {
+  const url = urlInput.value.trim();
+  if (!url) return;
+  if (loadStatus) loadStatus.textContent = "Loading URL…";
+  try {
+    useImage(await loadImageFromURL(url));
+  } catch {
+    if (loadStatus) loadStatus.textContent = "Could not load that URL (blocked by CORS, or not an image).";
+  }
+}
+document.getElementById("url-btn").addEventListener("click", useImageURL);
+urlInput.addEventListener("keydown", (e) => { if (e.key === "Enter") useImageURL(); });
+
 // Drag-and-drop anywhere on the canvas.
 canvas.addEventListener("dragover", (e) => e.preventDefault());
 canvas.addEventListener("drop", (e) => {

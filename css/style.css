@@ -140,6 +140,22 @@ body {
   font-size: 0.74rem;
 }
 
+#url-input {
+  padding: 6px 10px;
+  border: 1px solid rgba(200, 150, 62, 0.4);
+  border-radius: 999px;
+  background: rgba(20, 20, 24, 0.5);
+  color: var(--paper);
+  font: inherit;
+  font-size: 0.74rem;
+  width: 160px;
+  backdrop-filter: blur(6px);
+}
+
+#url-input::placeholder {
+  color: rgba(244, 239, 230, 0.5);
+}
+
 #disclaimer {
   position: absolute;
   bottom: 6px;

@@ -18,10 +18,12 @@ export function loadImageFromFile(file) {
   });
 }
 
-// Load an <img> from a same-origin URL (e.g. ./reference.png). Rejects on 404.
+// Load an <img> from a URL (./reference.png or a pasted remote URL). Requests
+// CORS so the pixels can be read; the load rejects if the host denies it.
 export function loadImageFromURL(url) {
   return new Promise((resolve, reject) => {
     const img = new Image();
+    img.crossOrigin = "anonymous";
     img.onload = () => resolve(img);
     img.onerror = reject;
     img.src = url;
