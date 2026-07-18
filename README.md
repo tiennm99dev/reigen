@@ -4,8 +4,8 @@ A tiny web app that draws **Reigen Arataka** from *Mob Psycho 100* — his face
 and slicked-back hair — as a flat **2D portrait rendered "using points"**, built
 with **plain JavaScript and Three.js only**. No build step, no framework.
 
-The character is defined once as vector regions (`THREE.Shape`) in
-`reigen-regions.js`, then each region is sampled into ~790,000 coloured points
+The character is defined once as shaded vector regions (`THREE.Shape`) in
+`reigen-regions.js`, then each region is sampled into ~3 million coloured points
 drawn as a single `THREE.Points` cloud through an orthographic camera. This is
 an **original fan interpretation** of the character (not a traced official
 image).
@@ -14,16 +14,19 @@ image).
 
 ## Features
 
-- **Point-cloud portrait** (~790k points): slicked-back side-parted hair, high
-  forehead, sharp half-lidded confident eyes with the signature heavy eye-line,
-  thin angled brows, a defined nose, a smug smirk, ears, and a light suit with a
-  shirt V and red tie. A custom round-point shader keeps the cloud solid and
+- **Point-cloud portrait** (~3M points): slicked-back side-parted hair with neat
+  swept-back grooves, high forehead, sharp half-lidded confident eyes with the
+  signature heavy eye-line, thin angled brows, a defined nose, a smug smirk,
+  ears, and a light suit with a shirt V and red tie.
+- **Form shading** via per-point vertical gradients (lit-from-above skin, crown
+  highlight / darker hair roots, jacket shading, under-chin neck shadow, and a
+  soft forehead shadow). A custom round-point shader keeps the cloud solid and
   crisp at any zoom or export size.
 - **6 shot framings** (full, portrait, face, "the stare", hair, smirk) with a
   smooth tween; scroll to zoom.
 - **Download ~100 MP PNG** — a single 100-megapixel framebuffer isn't feasible
-  in WebGL, so the current framing is rendered in **tiles** into a ~10000×10000
-  image and saved. Points stay sharp at that resolution.
+  in WebGL, so the current framing is rendered in **supersampled tiles** into a
+  ~10000×10000 image and saved. Points stay sharp and anti-aliased at that size.
 
 ## Run locally
 

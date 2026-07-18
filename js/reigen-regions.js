@@ -11,6 +11,7 @@ export const C = {
   skin: 0xf4cfa6,
   skinShade: 0xe4b487,
   hair: 0xb59a6b,
+  hairLine: 0xa2864f,
   hairShade: 0x8f7647,
   white: 0xfbf8f1,
   iris: 0x6d5636,
@@ -71,13 +72,34 @@ function hairShape() {
   return s;
 }
 
-const HAIR_STROKES = [
-  [[0.2, 0.58], [0.12, 1.4], [0.24, 1.42], [0.32, 0.56]], // part
-  [[-0.1, 0.6], [-0.4, 1.42], [-0.3, 1.46], [0.0, 0.6]],
-  [[-0.5, 0.55], [-0.72, 1.24], [-0.62, 1.28], [-0.4, 0.55]],
-  [[0.34, 0.5], [0.5, 1.34], [0.6, 1.32], [0.44, 0.48]],
-  [[0.6, 0.34], [0.82, 1.06], [0.9, 1.02], [0.68, 0.3]],
-  [[-0.76, 0.5], [-0.9, 1.0], [-0.82, 1.04], [-0.68, 0.5]],
+// A thin tapered strand quad from (x0,y0)->(x1,y1) with half-width w.
+function strandQuad(x0, y0, x1, y1, w) {
+  let dx = x1 - x0, dy = y1 - y0;
+  const len = Math.hypot(dx, dy) || 1;
+  const px = (-dy / len) * w, py = (dx / len) * w;
+  const wt = w * 0.4; // taper toward the tip
+  const ptx = (-dy / len) * wt, pty = (dx / len) * wt;
+  return poly([
+    [x0 + px, y0 + py],
+    [x1 + ptx, y1 + pty],
+    [x1 - ptx, y1 - pty],
+    [x0 - px, y0 - py],
+  ]);
+}
+
+// Neat swept-back grooves: many thin strands fanning from the hairline up and
+// back over the crown, following the head. [x0,y0,x1,y1,halfWidth].
+const HAIR_STRANDS = [
+  [0.2, 0.58, 0.14, 1.46, 0.03], // part groove (darker)
+  [0.06, 0.6, -0.1, 1.5, 0.028],
+  [-0.16, 0.58, -0.34, 1.42, 0.028],
+  [-0.36, 0.54, -0.56, 1.3, 0.028],
+  [-0.56, 0.48, -0.76, 1.12, 0.026],
+  [-0.72, 0.36, -0.9, 0.9, 0.024],
+  [0.28, 0.54, 0.24, 1.4, 0.028],
+  [0.42, 0.48, 0.44, 1.28, 0.028],
+  [0.56, 0.4, 0.64, 1.12, 0.026],
+  [0.68, 0.3, 0.84, 0.92, 0.024],
 ];
 
 function eyeShapes(dir) {
@@ -129,7 +151,10 @@ function mouthShape() {
   return s;
 }
 
-const DEFAULT = { x: 0, y: 0, z: 0, sx: 1, outline: true, ow: 0.045 };
+// grad (optional): { lo, hi } vertical brightness multipliers applied to the
+// fill — `lo` at the region's bottom, `hi` at its top — for lit-from-above form
+// shading. Points renderer reads it; outlines are unaffected.
+const DEFAULT = { x: 0, y: 0, z: 0, sx: 1, outline: true, ow: 0.045, grad: null };
 
 /**
  * Flat list of placed regions, back-to-front by z.
@@ -141,9 +166,9 @@ export function getRegions() {
 
   // --- Bust (suit / shirt / tie) ---
   add(poly([[-1.7, -1.1], [1.7, -1.1], [1.4, 0.1], [-1.4, 0.1]]),
-    { color: C.jacket, y: -2.5, z: -0.2, ow: 0.05 });
+    { color: C.jacket, y: -2.5, z: -0.2, ow: 0.05, grad: { lo: 0.85, hi: 1.06 } });
   add(poly([[-0.3, 0.15], [0.3, 0.15], [0.42, -0.55], [-0.42, -0.55]]),
-    { color: C.skin, y: -1.5, z: -0.1 });
+    { color: C.skin, y: -1.5, z: -0.1, grad: { lo: 0.98, hi: 0.82 } }); // shadow under chin
   add(poly([[-0.32, 0.2], [0.32, 0.2], [0, -0.7]]),
     { color: C.shirt, y: -2.15, z: -0.05, outline: false });
   add(poly([[-0.05, 0.28], [-0.62, 0.22], [-0.5, -0.75]]),
@@ -159,8 +184,16 @@ export function getRegions() {
   add(earShape(), { color: C.skin, x: 0.88, y: -0.08, z: -0.05 });
   add(earShape(), { color: C.skin, x: -0.88, y: -0.08, z: -0.05, sx: -1 });
 
-  // --- Face ---
-  add(faceShape(), { color: C.skin, z: 0, ow: 0.05 });
+  // --- Face (lit from above) ---
+  add(faceShape(), { color: C.skin, z: 0, ow: 0.05, grad: { lo: 0.9, hi: 1.02 } });
+
+  // Soft forehead shadow just under the hairline (fades downward via gradient).
+  const fh = new THREE.Shape();
+  fh.moveTo(-0.6, 0.28);
+  fh.bezierCurveTo(-0.4, 0.5, -0.1, 0.52, 0.24, 0.5);
+  fh.bezierCurveTo(0.45, 0.42, 0.55, 0.34, 0.62, 0.28);
+  fh.bezierCurveTo(0.3, 0.34, -0.2, 0.34, -0.6, 0.28);
+  add(fh, { color: C.skin, z: 0.12, outline: false, grad: { lo: 1.0, hi: 0.84 } });
 
   // --- Brows ---
   add(browShape(1), { color: C.brow, x: 0.44, y: 0.34, z: 0.5, outline: false });
@@ -183,10 +216,11 @@ export function getRegions() {
   // --- Mouth ---
   add(mouthShape(), { color: C.mouth, y: -0.72, z: 0.5, outline: false });
 
-  // --- Hair ---
-  add(hairShape(), { color: C.hair, z: 0.3, ow: 0.05 });
-  HAIR_STROKES.forEach((pts) =>
-    add(poly(pts), { color: C.hairShade, z: 0.32, outline: false })
+  // --- Hair (highlight at the crown, darker roots via gradient) ---
+  add(hairShape(), { color: C.hair, z: 0.3, ow: 0.05, grad: { lo: 0.82, hi: 1.12 } });
+  HAIR_STRANDS.forEach((s, i) =>
+    add(strandQuad(s[0], s[1], s[2], s[3], s[4]),
+      { color: i === 0 ? C.hairShade : C.hairLine, z: 0.32, outline: false })
   );
 
   return R;

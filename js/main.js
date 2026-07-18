@@ -13,13 +13,14 @@ const renderer = new THREE.WebGLRenderer({
   antialias: true,
   preserveDrawingBuffer: true,
 });
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 3));
 renderer.setSize(window.innerWidth, window.innerHeight);
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0xe9e3d6);
 
-const reigen = buildReigenPoints({ fillDensity: 60000, edgeDensity: 2600, size: 0.011 });
+// ~3M points for a dense, solid, smoothly-shaded cloud.
+const reigen = buildReigenPoints({ fillDensity: 230000, edgeDensity: 5200, size: 0.0065 });
 scene.add(reigen);
 
 // --- Orthographic camera (true 2D) ------------------------------------------
@@ -104,7 +105,8 @@ async function exportHighRes(targetMP = 100) {
   const wl = camera.position.x - halfW, wr = camera.position.x + halfW;
   const wb = camera.position.y - halfH, wt = camera.position.y + halfH;
 
-  const TILE = 2048;
+  const SS = 2; // supersample each tile then downscale for smooth anti-aliasing
+  const TILE = 1600;
   const tilesX = Math.ceil(bigW / TILE);
   const tilesY = Math.ceil(bigH / TILE);
   const tileW = Math.ceil(bigW / tilesX);
@@ -114,10 +116,12 @@ async function exportHighRes(targetMP = 100) {
   big.width = tileW * tilesX;
   big.height = tileH * tilesY;
   const ctx = big.getContext("2d");
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = "high";
 
   const savedRatio = renderer.getPixelRatio();
   renderer.setPixelRatio(1);
-  renderer.setSize(tileW, tileH, false);
+  renderer.setSize(tileW * SS, tileH * SS, false);
 
   const expCam = new THREE.OrthographicCamera(0, 1, 1, 0, 0.1, 100);
   expCam.position.set(0, 0, 10);
@@ -130,8 +134,9 @@ async function exportHighRes(targetMP = 100) {
       expCam.bottom = wt - ((wt - wb) * (iy + 1)) / tilesY;
       expCam.zoom = 1;
       expCam.updateProjectionMatrix();
-      updatePointSize(reigen, expCam, tileH);
+      updatePointSize(reigen, expCam, tileH * SS);
       renderer.render(scene, expCam);
+      // Downscale the supersampled tile into the big canvas for crisp AA edges.
       ctx.drawImage(renderer.domElement, ix * tileW, iy * tileH, tileW, tileH);
     }
     if (statusEl) {
