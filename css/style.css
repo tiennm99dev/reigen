@@ -115,6 +115,28 @@ body {
   cursor: pointer;
 }
 
+#export-btn {
+  padding: 6px 12px;
+  border: 1px solid rgba(200, 150, 62, 0.6);
+  border-radius: 999px;
+  background: var(--panel);
+  color: var(--paper);
+  font: inherit;
+  font-size: 0.76rem;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  transition: background 0.2s;
+}
+
+#export-btn:hover {
+  background: rgba(200, 150, 62, 0.28);
+}
+
+#export-status {
+  color: var(--accent);
+  font-size: 0.74rem;
+}
+
 @media (max-width: 620px) {
   #shot-bar {
     top: auto;
