@@ -115,7 +115,8 @@ body {
   cursor: pointer;
 }
 
-#export-btn {
+#export-btn,
+#load-btn {
   padding: 6px 12px;
   border: 1px solid rgba(200, 150, 62, 0.6);
   border-radius: 999px;
@@ -128,11 +129,13 @@ body {
   transition: background 0.2s;
 }
 
-#export-btn:hover {
+#export-btn:hover,
+#load-btn:hover {
   background: rgba(200, 150, 62, 0.28);
 }
 
-#export-status {
+#export-status,
+#load-status {
   color: var(--accent);
   font-size: 0.74rem;
 }

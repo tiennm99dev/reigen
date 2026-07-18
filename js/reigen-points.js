@@ -102,8 +102,8 @@ export function samplePoints(opts = {}) {
 // Round-point shader: gl_PointSize is set from a world size × pixels-per-unit
 // uniform, so points scale with zoom and render resolution (solid everywhere).
 // RawShaderMaterial so we declare built-ins ourselves (no injected color/vColor
-// conflicts).
-function pointMaterial(worldSize) {
+// conflicts). Shared by the vector cloud and the image-based cloud.
+export function makePointMaterial(worldSize) {
   return new THREE.RawShaderMaterial({
     uniforms: {
       uPixPerUnit: { value: 300 },
@@ -146,7 +146,7 @@ export function buildReigenPoints(opts = {}) {
   const geo = new THREE.BufferGeometry();
   geo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
   geo.setAttribute("color", new THREE.BufferAttribute(colors, 3));
-  const points = new THREE.Points(geo, pointMaterial(opts.size ?? 0.01));
+  const points = new THREE.Points(geo, makePointMaterial(opts.size ?? 0.01));
   points.name = "ReigenPoints";
   points.userData.count = count;
   return points;

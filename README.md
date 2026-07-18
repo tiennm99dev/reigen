@@ -22,6 +22,10 @@ image).
   highlight / darker hair roots, jacket shading, under-chin neck shadow, and a
   soft forehead shadow). A custom round-point shader keeps the cloud solid and
   crisp at any zoom or export size.
+- **Use your own reference image** — click *Load image* or drag any image onto
+  the canvas and it's sampled into the point cloud **locally in your browser**
+  (nothing is uploaded). If a `reference.png` exists at the repo root it's used
+  automatically. No image is bundled or published by this project.
 - **6 shot framings** (full, portrait, face, "the stare", hair, smirk) with a
   smooth tween; scroll to zoom.
 - **Download ~100 MP PNG** — a single 100-megapixel framebuffer isn't feasible

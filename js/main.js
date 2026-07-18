@@ -3,6 +3,7 @@
 // "Download ~100 MP" button renders the cloud in tiles into a huge PNG.
 import * as THREE from "three";
 import { buildReigenPoints, updatePointSize } from "./reigen-points.js";
+import { buildPointsFromImage, loadImageFromFile, loadImageFromURL } from "./image-points.js";
 import { SHOTS, getShot } from "./camera-shots.js";
 
 const canvas = document.getElementById("scene");
@@ -19,9 +20,20 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0xe9e3d6);
 
-// ~3M points for a dense, solid, smoothly-shaded cloud.
-const reigen = buildReigenPoints({ fillDensity: 230000, edgeDensity: 5200, size: 0.0065 });
-scene.add(reigen);
+// The active point cloud (swappable: built-in vector art, or a loaded image).
+// ~3M points for a dense, solid, smoothly-shaded default.
+let cloud = buildReigenPoints({ fillDensity: 230000, edgeDensity: 5200, size: 0.0065 });
+scene.add(cloud);
+
+// Replace the active cloud, disposing the old one.
+function setCloud(next) {
+  if (!next) return;
+  scene.remove(cloud);
+  cloud.geometry.dispose();
+  cloud.material.dispose();
+  cloud = next;
+  scene.add(cloud);
+}
 
 // --- Orthographic camera (true 2D) ------------------------------------------
 const FRUSTUM_H = 4;
@@ -134,7 +146,7 @@ async function exportHighRes(targetMP = 100) {
       expCam.bottom = wt - ((wt - wb) * (iy + 1)) / tilesY;
       expCam.zoom = 1;
       expCam.updateProjectionMatrix();
-      updatePointSize(reigen, expCam, tileH * SS);
+      updatePointSize(cloud, expCam, tileH * SS);
       renderer.render(scene, expCam);
       // Downscale the supersampled tile into the big canvas for crisp AA edges.
       ctx.drawImage(renderer.domElement, ix * tileW, iy * tileH, tileW, tileH);
@@ -168,6 +180,39 @@ document.getElementById("export-btn").addEventListener("click", () => {
   setTimeout(() => exportHighRes(100), 30);
 });
 
+// --- Load a raw image as the reference cloud --------------------------------
+const loadStatus = document.getElementById("load-status");
+function useImage(img) {
+  setCloud(buildPointsFromImage(img, { maxSample: 1200 }));
+  if (loadStatus) loadStatus.textContent = `Loaded image (${cloud.userData.count.toLocaleString()} pts)`;
+}
+async function useImageFile(file) {
+  if (!file || !file.type.startsWith("image/")) return;
+  if (loadStatus) loadStatus.textContent = "Loading image…";
+  try {
+    useImage(await loadImageFromFile(file));
+  } catch {
+    if (loadStatus) loadStatus.textContent = "Could not read that image.";
+  }
+}
+
+// Picker button + hidden input.
+const fileInput = document.getElementById("image-input");
+document.getElementById("load-btn").addEventListener("click", () => fileInput.click());
+fileInput.addEventListener("change", () => useImageFile(fileInput.files[0]));
+
+// Drag-and-drop anywhere on the canvas.
+canvas.addEventListener("dragover", (e) => e.preventDefault());
+canvas.addEventListener("drop", (e) => {
+  e.preventDefault();
+  useImageFile(e.dataTransfer.files[0]);
+});
+
+// If the repo ships a ./reference.png, use it automatically on load.
+loadImageFromURL("./reference.png")
+  .then((img) => useImage(img))
+  .catch(() => {}); // no reference bundled — keep the built-in vector art
+
 // --- Render loop ------------------------------------------------------------
 const clock = new THREE.Clock();
 function animate() {
@@ -185,9 +230,9 @@ function animate() {
     if (tween.t >= 1) tween = null;
   }
 
-  reigen.position.y = Math.sin(clock.elapsedTime * 1.1) * 0.012;
+  cloud.position.y = Math.sin(clock.elapsedTime * 1.1) * 0.012;
 
-  updatePointSize(reigen, camera, renderer.domElement.height);
+  updatePointSize(cloud, camera, renderer.domElement.height);
   renderer.render(scene, camera);
 }
 animate();
