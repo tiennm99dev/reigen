@@ -36,14 +36,14 @@ function poly(points) {
 function faceShape() {
   const s = new THREE.Shape();
   // Angular male anime face: wide forehead, tapered jaw, slightly pointed chin.
-  s.moveTo(0, -1.28);
-  s.bezierCurveTo(0.34, -1.24, 0.6, -1.02, 0.74, -0.62);
-  s.bezierCurveTo(0.85, -0.32, 0.9, 0.02, 0.88, 0.34);
-  s.bezierCurveTo(0.86, 0.66, 0.74, 0.92, 0.5, 1.04);
-  s.quadraticCurveTo(0, 1.16, -0.5, 1.04);
-  s.bezierCurveTo(-0.74, 0.92, -0.86, 0.66, -0.88, 0.34);
-  s.bezierCurveTo(-0.9, 0.02, -0.85, -0.32, -0.74, -0.62);
-  s.bezierCurveTo(-0.6, -1.02, -0.34, -1.24, 0, -1.28);
+  s.moveTo(0, -1.14);
+  s.bezierCurveTo(0.36, -1.08, 0.62, -0.9, 0.76, -0.56);
+  s.bezierCurveTo(0.87, -0.28, 0.91, 0.04, 0.88, 0.36);
+  s.bezierCurveTo(0.86, 0.68, 0.74, 0.94, 0.5, 1.06);
+  s.quadraticCurveTo(0, 1.18, -0.5, 1.06);
+  s.bezierCurveTo(-0.74, 0.94, -0.86, 0.68, -0.88, 0.36);
+  s.bezierCurveTo(-0.91, 0.04, -0.87, -0.28, -0.76, -0.56);
+  s.bezierCurveTo(-0.62, -0.9, -0.36, -1.08, 0, -1.14);
   return s;
 }
 
@@ -56,19 +56,27 @@ function earShape() {
   return s;
 }
 
-// Slicked-straight-back hair: a band across the top, short at the sides, high
-// forehead hairline, side part on his left (+x).
+// Short hair with a side part (his left, +x) and bangs sweeping across the
+// forehead in two directions, meeting at the part. Lower crown, short sides —
+// closer to Reigen's canonical cut than a slicked-back helmet.
 function hairShape() {
   const s = new THREE.Shape();
-  s.moveTo(0.84, 0.2);
-  s.bezierCurveTo(0.98, 0.6, 0.96, 1.0, 0.82, 1.28);
-  s.bezierCurveTo(0.6, 1.6, 0.2, 1.66, -0.12, 1.62);
-  s.bezierCurveTo(-0.46, 1.58, -0.74, 1.34, -0.86, 1.0);
-  s.bezierCurveTo(-0.96, 0.66, -0.92, 0.5, -0.84, 0.2);
-  s.bezierCurveTo(-0.66, 0.44, -0.4, 0.6, -0.12, 0.58);
-  s.bezierCurveTo(0.06, 0.57, 0.16, 0.7, 0.24, 0.6);
-  s.bezierCurveTo(0.34, 0.46, 0.5, 0.34, 0.66, 0.28);
-  s.bezierCurveTo(0.74, 0.25, 0.8, 0.22, 0.84, 0.2);
+  // Outer silhouette: right temple -> over the crown -> left temple.
+  s.moveTo(0.82, 0.16);
+  s.bezierCurveTo(0.94, 0.5, 0.92, 0.92, 0.78, 1.18);
+  s.bezierCurveTo(0.54, 1.44, 0.18, 1.5, -0.14, 1.46);
+  s.bezierCurveTo(-0.46, 1.42, -0.72, 1.2, -0.84, 0.9);
+  s.bezierCurveTo(-0.92, 0.58, -0.9, 0.44, -0.82, 0.16);
+  // Bangs edge across the forehead: fringe tips dip down, notch at the part.
+  s.bezierCurveTo(-0.72, 0.4, -0.62, 0.44, -0.52, 0.36);
+  s.lineTo(-0.44, 0.2); // left fringe tip
+  s.bezierCurveTo(-0.38, 0.34, -0.28, 0.42, -0.16, 0.42);
+  s.lineTo(-0.08, 0.24); // fringe tip
+  s.bezierCurveTo(0.0, 0.4, 0.08, 0.5, 0.15, 0.6); // rise to the part
+  s.lineTo(0.22, 0.52); // part notch
+  s.bezierCurveTo(0.3, 0.44, 0.4, 0.4, 0.5, 0.36);
+  s.lineTo(0.56, 0.22); // right fringe tip (shorter side)
+  s.bezierCurveTo(0.64, 0.32, 0.74, 0.24, 0.82, 0.16);
   s.closePath();
   return s;
 }
@@ -88,20 +96,21 @@ function strandQuad(x0, y0, x1, y1, w) {
   ]);
 }
 
-// Neat swept-back grooves: many thin strands fanning from the hairline up and
-// back over the crown, following the head. [x0,y0,x1,y1,halfWidth].
+// Grooves fanning from the side part: bangs sweep down/out across the forehead
+// (bigger sweep to his right / viewer-left), plus strands over the crown.
+// [x0,y0,x1,y1,halfWidth]; first entry is the darker part groove.
 const HAIR_STRANDS = [
-  [0.2, 0.58, 0.14, 1.46, 0.03], // part groove (darker)
-  [0.06, 0.6, -0.1, 1.5, 0.028],
-  [-0.16, 0.58, -0.34, 1.42, 0.028],
-  [-0.36, 0.54, -0.56, 1.3, 0.028],
-  [-0.56, 0.48, -0.76, 1.12, 0.026],
-  [-0.72, 0.36, -0.9, 0.9, 0.024],
-  [0.28, 0.54, 0.24, 1.4, 0.028],
-  [0.42, 0.48, 0.44, 1.28, 0.028],
-  [0.56, 0.4, 0.64, 1.12, 0.026],
-  [0.68, 0.3, 0.84, 0.92, 0.024],
-];
+  [0.2, 0.5, 0.15, 1.2, 0.03], // part groove (darker)
+  [0.08, 0.52, -0.24, 0.36], // left bangs (low)
+  [-0.06, 0.54, -0.38, 0.34],
+  [-0.24, 0.56, -0.52, 0.4],
+  [-0.44, 0.58, -0.68, 0.92], // left side sweep up
+  [-0.05, 0.72, -0.34, 1.26], // crown, left
+  [-0.42, 0.78, -0.64, 1.12],
+  [0.28, 0.5, 0.5, 0.34], // right bangs (shorter side)
+  [0.42, 0.54, 0.62, 0.9], // right side sweep up
+  [0.28, 0.68, 0.48, 1.18], // crown, right
+].map((s) => (s.length === 5 ? s : [...s, 0.025]));
 
 function eyeShapes(dir) {
   // Sharp, narrow Reigen eye at local origin. Returns [{shape,color,dz,outline,ow}].
@@ -215,7 +224,7 @@ export function getRegions() {
   add(noseTip, { color: C.skinShade, y: -0.28, z: 0.51, outline: false });
 
   // --- Mouth ---
-  add(mouthShape(), { color: C.mouth, y: -0.72, z: 0.5, outline: false });
+  add(mouthShape(), { color: C.mouth, y: -0.62, z: 0.5, outline: false });
 
   // --- Hair (highlight at the crown, darker roots via gradient) ---
   add(hairShape(), { color: C.hair, z: 0.3, ow: 0.05, grad: { lo: 0.82, hi: 1.12 } });
