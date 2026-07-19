@@ -1,37 +1,27 @@
-# Reigen Arataka — Three.js
+# Anime portrait in points — PixiJS
 
-A tiny web app that draws **Reigen Arataka** from *Mob Psycho 100* — his face
-and slicked-back hair — as a flat **2D portrait rendered "using points"**, built
-with **plain JavaScript and Three.js only**. No build step, no framework.
+A tiny web app that **reproduces an image with points**: it samples an image's
+pixels into a coloured point cloud rendered with **PixiJS v8** (2D-native WebGL)
+through a pan/zoom "world" container. Plain JavaScript, no build step.
 
-The character is defined once as shaded vector regions (`THREE.Shape`) in
-`reigen-regions.js`, then each region is sampled into ~3 million coloured points
-drawn as a single `THREE.Points` cloud through an orthographic camera. This is
-an **original fan interpretation** of the character (not a traced official
-image).
+Ships with a **CC0 / public-domain** anime portrait as the default. Load any
+image of your own to reproduce that instead — the sampling is image-agnostic.
 
 **Live demo:** https://tiennm99.github.io/reigen/
 
 ## Features
 
-- **Point-cloud portrait** (~3M points): slicked-back side-parted hair with neat
-  swept-back grooves, high forehead, sharp half-lidded confident eyes with the
-  signature heavy eye-line, thin angled brows, a defined nose, a smug smirk,
-  ears, and a light suit with a shirt V and red tie.
-- **Form shading** via per-point vertical gradients (lit-from-above skin, crown
-  highlight / darker hair roots, jacket shading, under-chin neck shadow, and a
-  soft forehead shadow). A custom round-point shader keeps the cloud solid and
-  crisp at any zoom or export size.
-- **Use your own reference image** — click *Load image*, drag any image onto the
-  canvas, or paste an image URL, and it's sampled into the point cloud **locally
-  in your browser** (nothing is uploaded). If a `reference.png` exists at the
-  repo root it's used automatically. No image is bundled or published by this
-  project — remote URLs are fetched client-side only.
-- **6 shot framings** (full, portrait, face, "the stare", hair, smirk) with a
-  smooth tween; scroll to zoom.
+- **Reproduce any image with points** — each opaque pixel of the sampled image
+  becomes one round, per-point-tinted particle in a PixiJS `ParticleContainer`
+  (hundreds of thousands of points; framing via a parent container transform).
+- **Load your own image** — click *Load image*, drag an image onto the canvas,
+  or paste an image URL. Images you load are processed **locally in your
+  browser** and never uploaded; remote URLs are fetched client-side only.
+- **6 shot framings** (full, portrait, face, eyes, top, detail) with a smooth
+  tween; scroll to zoom.
 - **Download ~100 MP PNG** — a single 100-megapixel framebuffer isn't feasible
   in WebGL, so the current framing is rendered in **supersampled tiles** into a
-  ~10000×10000 image and saved. Points stay sharp and anti-aliased at that size.
+  ~10000×10000 image and saved.
 
 ## Run locally
 
@@ -46,16 +36,18 @@ python3 -m http.server 8099
 ## Project structure
 
 ```
-index.html                 # markup, import map, UI chrome
-css/style.css              # layout and controls styling
-js/main.js                 # renderer, ortho camera, shots, tiled 100MP export, loop
-js/reigen-regions.js       # Reigen as placed vector regions (single source)
-js/reigen-points.js        # samples regions into the THREE.Points cloud + shader
-js/camera-shots.js         # 2D framing presets (zoom + pan)
-.github/workflows/         # GitHub Pages deployment
+index.html                     # markup, import map, UI chrome
+css/style.css                  # layout and controls styling
+js/main.js                     # PixiJS app: world transform, shots, 100MP export
+js/sample-image.js             # image -> point positions + colours (framework-agnostic)
+js/pixi-points.js              # builds the PixiJS ParticleContainer point cloud
+js/image-loaders.js            # load an <img> from a File or URL
+js/camera-shots.js             # 2D framing presets (zoom + focus)
+assets/anime-portrait-cc0.png  # default CC0 image (public domain)
+.github/workflows/             # GitHub Pages deployment
 ```
 
-Three.js is loaded from a CDN via the import map in `index.html`.
+PixiJS v8 is loaded from a CDN via the import map in `index.html`.
 
 ## Deployment
 
@@ -63,15 +55,12 @@ Pushing to `main` triggers the GitHub Actions workflow
 (`.github/workflows/deploy-pages.yml`), which publishes the repo root to GitHub
 Pages. Enable Pages once under **Settings → Pages → Source: GitHub Actions**.
 
-## Disclaimer
+## Credits & licensing
 
-This is a **fan-made, non-commercial** project — an original point-art
-interpretation of the character, informed by appearance details from the
-[Mob Psycho 100 wiki](https://mob-psycho-100.fandom.com/wiki/Arataka_Reigen)
-(reddish-blond hair, dark-brown eyes, dark-grey suit, black shirt, pink tie).
-No official artwork or images were copied or traced.
+The bundled default image is **“Anime girl” by oksmith** (Open Clipart),
+released under the [CC0 1.0 Public Domain Dedication](https://commons.wikimedia.org/wiki/File:Anime_girl_publicdomainq.png)
+— free to use, including commercially.
 
-Reigen Arataka and *Mob Psycho 100* are © ONE / Shogakukan / BONES. This
-project is not affiliated with or endorsed by the rights holders. If you are a
-rights holder with a licensing concern, please contact the author at
-[github.com/tiennm99](https://github.com/tiennm99).
+Images you load yourself are processed **locally in your browser** and are never
+uploaded or published by this project. Do not load images you don't have the
+right to use. Questions: [github.com/tiennm99](https://github.com/tiennm99).

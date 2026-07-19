@@ -3,14 +3,13 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Reigen Arataka — Three.js</title>
+    <title>Anime portrait in points — PixiJS</title>
     <link rel="stylesheet" href="./css/style.css" />
-    <!-- Three.js is loaded via an import map so main.js can `import ... from "three"` -->
+    <!-- PixiJS v8 (2D-native WebGL) via an import map so main.js can `import ... from "pixi.js"` -->
     <script type="importmap">
       {
         "imports": {
-          "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-          "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+          "pixi.js": "https://cdn.jsdelivr.net/npm/pixi.js@8/dist/pixi.min.mjs"
         }
       }
     </script>
@@ -20,8 +19,8 @@
       <canvas id="scene"></canvas>
 
       <header id="titlebar">
-        <h1>霊幻 新隆 &middot; Reigen Arataka</h1>
-        <p>The Greatest Psychic of the 21st Century — built with Three.js</p>
+        <h1>Anime portrait &middot; drawn in points</h1>
+        <p>PixiJS point cloud — load any image to reproduce it with points</p>
       </header>
 
       <div id="shot-bar" role="toolbar" aria-label="Camera shots"></div>
@@ -38,11 +37,12 @@
       </footer>
 
       <p id="disclaimer">
-        Fan-made, non-commercial. Original point-art interpretation informed by
-        the Mob Psycho 100 wiki. Reigen Arataka and Mob Psycho 100 are
-        &copy; ONE / Shogakukan / BONES — this project is not affiliated with or
-        endorsed by the rights holders. Any license concern: contact
-        <a href="https://github.com/tiennm99" target="_blank" rel="noopener">github.com/tiennm99</a>.
+        Default image: “Anime girl” by oksmith (Open Clipart),
+        <a href="https://commons.wikimedia.org/wiki/File:Anime_girl_publicdomainq.png" target="_blank" rel="noopener">CC0 / public domain</a>.
+        Load your own image to reproduce it with points — images you load are
+        processed locally in your browser and never uploaded. Do not load
+        copyrighted images you don’t have the right to use. Non-commercial demo;
+        any concern: <a href="https://github.com/tiennm99" target="_blank" rel="noopener">github.com/tiennm99</a>.
       </p>
     </div>
 

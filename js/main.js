@@ -1,72 +1,93 @@
-// Scene bootstrap: renders Reigen as a point cloud through an orthographic
-// camera (true 2D). Shot framings tween on button press, wheel zooms, and a
-// "Download ~100 MP" button renders the cloud in tiles into a huge PNG.
-import * as THREE from "three";
-import { buildReigenPoints, updatePointSize } from "./reigen-points.js";
-import { buildPointsFromImage, loadImageFromFile, loadImageFromURL } from "./image-points.js";
+// Scene bootstrap on PixiJS v8 (2D-native). The active image is sampled into a
+// ParticleContainer point cloud; framing is done by transforming a parent
+// "world" container (zoom/pan), and a tiled render exports a ~100 MP PNG.
+import { Application, Container, RenderTexture } from "pixi.js";
+import { sampleImage } from "./sample-image.js";
+import { buildParticleCloud } from "./pixi-points.js";
+import { loadImageFromFile, loadImageFromURL } from "./image-loaders.js";
 import { SHOTS, getShot } from "./camera-shots.js";
 
+const BG_HEX = 0xe9e3d6;
+const BG_CSS = "#e9e3d6";
 const canvas = document.getElementById("scene");
 
-// preserveDrawingBuffer lets the export copy each rendered tile off the canvas.
-const renderer = new THREE.WebGLRenderer({
-  canvas,
-  antialias: true,
-  preserveDrawingBuffer: true,
-});
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 3));
-renderer.setSize(window.innerWidth, window.innerHeight);
-
-const scene = new THREE.Scene();
-scene.background = new THREE.Color(0xe9e3d6);
-
-// The active point cloud (swappable: built-in vector art, or a loaded image).
-// ~3M points for a dense, solid, smoothly-shaded default.
-let cloud = buildReigenPoints({ fillDensity: 230000, edgeDensity: 5200, size: 0.0065 });
-scene.add(cloud);
-
-// Replace the active cloud, disposing the old one.
-function setCloud(next) {
-  if (!next) return;
-  scene.remove(cloud);
-  cloud.geometry.dispose();
-  cloud.material.dispose();
-  cloud = next;
-  scene.add(cloud);
+const app = new Application();
+try {
+  await app.init({
+    canvas,
+    background: BG_HEX,
+    antialias: true,
+    resolution: Math.min(window.devicePixelRatio || 1, 3),
+    autoDensity: true,
+    resizeTo: window,
+    preference: "webgl",
+  });
+} catch (err) {
+  document.body.innerHTML =
+    `<p style="color:#fff;font-family:sans-serif;padding:2rem">` +
+    `Could not start WebGL renderer: ${err}</p>`;
+  throw err;
 }
 
-// --- Orthographic camera (true 2D) ------------------------------------------
-const FRUSTUM_H = 4;
-let camera;
-function makeCamera() {
-  const aspect = window.innerWidth / window.innerHeight;
-  camera = new THREE.OrthographicCamera(
-    (-FRUSTUM_H * aspect) / 2, (FRUSTUM_H * aspect) / 2,
-    FRUSTUM_H / 2, -FRUSTUM_H / 2, 0.1, 100
-  );
-  camera.position.set(SHOTS[0].cx, SHOTS[0].cy, 10);
-  camera.zoom = SHOTS[0].zoom;
-  camera.updateProjectionMatrix();
-}
-makeCamera();
+const world = new Container();
+app.stage.addChild(world);
 
-// --- Shot tween -------------------------------------------------------------
+let cloud = null;
+let currentShotId = SHOTS[0].id;
+let userZoom = 1; // wheel multiplier on top of the shot zoom
 let tween = null;
-let userZoom = SHOTS[0].zoom;
 
-function goToShot(id) {
-  const s = getShot(id);
-  tween = {
-    from: { x: camera.position.x, y: camera.position.y, zoom: camera.zoom },
-    to: { x: s.cx, y: s.cy, zoom: s.zoom },
-    t: 0,
+const lerp = (a, b, t) => a + (b - a) * t;
+const easeInOut = (t) => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
+const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+
+function contentSize() {
+  return cloud ? { w: cloud.sw * cloud.cell, h: cloud.sh * cloud.cell } : { w: 1, h: 1 };
+}
+function fitScale() {
+  const { w, h } = contentSize();
+  return Math.min(app.screen.width / w, app.screen.height / h) * 0.92;
+}
+function targetTransform(shot) {
+  const { w, h } = contentSize();
+  const scale = fitScale() * shot.zoom * userZoom;
+  return {
+    scale,
+    x: app.screen.width / 2 - shot.cx * w * scale,
+    y: app.screen.height / 2 - shot.cy * h * scale,
   };
-  userZoom = s.zoom;
+}
+function applyTransform(t) {
+  world.scale.set(t.scale);
+  world.position.set(t.x, t.y);
+}
+
+function goToShot(id, instant = false) {
+  currentShotId = id;
+  userZoom = 1;
+  const t = targetTransform(getShot(id));
+  if (instant) { applyTransform(t); tween = null; }
+  else tween = { from: { scale: world.scale.x, x: world.x, y: world.y }, to: t, t: 0 };
   document.querySelectorAll(".shot-btn")
     .forEach((b) => b.classList.toggle("active", b.dataset.shot === id));
 }
-const easeInOut = (t) => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
 
+function setImage(img) {
+  const sample = sampleImage(img, { maxSample: 900 });
+  const pc = buildParticleCloud(app.renderer, sample, { cell: 1, coverage: 1.45 });
+  if (cloud) {
+    world.removeChild(cloud);
+    const oldTex = cloud._dotTex;
+    cloud.destroy();
+    oldTex?.destroy(true);
+  }
+  cloud = pc;
+  world.addChild(cloud);
+  goToShot(currentShotId, true);
+  return pc.count;
+}
+
+// --- Shot buttons -----------------------------------------------------------
 const shotBar = document.getElementById("shot-bar");
 SHOTS.forEach((shot, i) => {
   const btn = document.createElement("button");
@@ -81,48 +102,62 @@ SHOTS.forEach((shot, i) => {
 canvas.addEventListener("wheel", (e) => {
   e.preventDefault();
   if (tween) return;
-  userZoom = THREE.MathUtils.clamp(userZoom * (e.deltaY < 0 ? 1.1 : 0.9), 0.5, 8);
-  camera.zoom = userZoom;
-  camera.updateProjectionMatrix();
+  userZoom = clamp(userZoom * (e.deltaY < 0 ? 1.1 : 0.9), 0.4, 12);
+  applyTransform(targetTransform(getShot(currentShotId)));
 }, { passive: false });
 
-// --- Resize -----------------------------------------------------------------
-window.addEventListener("resize", () => {
-  const aspect = window.innerWidth / window.innerHeight;
-  camera.left = (-FRUSTUM_H * aspect) / 2;
-  camera.right = (FRUSTUM_H * aspect) / 2;
-  camera.top = FRUSTUM_H / 2;
-  camera.bottom = -FRUSTUM_H / 2;
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-});
+window.addEventListener("resize", () => applyTransform(targetTransform(getShot(currentShotId))));
+
+// --- Image loading (file / drag-drop / URL / bundled default) ---------------
+const loadStatus = document.getElementById("load-status");
+function useImage(img) {
+  const n = setImage(img);
+  if (loadStatus) loadStatus.textContent = `Loaded (${n.toLocaleString()} pts)`;
+}
+async function useImageFile(file) {
+  if (!file || !file.type.startsWith("image/")) return;
+  if (loadStatus) loadStatus.textContent = "Loading image…";
+  try { useImage(await loadImageFromFile(file)); }
+  catch { if (loadStatus) loadStatus.textContent = "Could not read that image."; }
+}
+
+const fileInput = document.getElementById("image-input");
+document.getElementById("load-btn").addEventListener("click", () => fileInput.click());
+fileInput.addEventListener("change", () => useImageFile(fileInput.files[0]));
+
+const urlInput = document.getElementById("url-input");
+async function useImageURL() {
+  const url = urlInput.value.trim();
+  if (!url) return;
+  if (loadStatus) loadStatus.textContent = "Loading URL…";
+  try { useImage(await loadImageFromURL(url)); }
+  catch { if (loadStatus) loadStatus.textContent = "Could not load that URL (CORS blocked, or not an image)."; }
+}
+document.getElementById("url-btn").addEventListener("click", useImageURL);
+urlInput.addEventListener("keydown", (e) => { if (e.key === "Enter") useImageURL(); });
+
+canvas.addEventListener("dragover", (e) => e.preventDefault());
+canvas.addEventListener("drop", (e) => { e.preventDefault(); useImageFile(e.dataTransfer.files[0]); });
 
 // --- Tiled ~100 MP PNG export ----------------------------------------------
-// A single 100 MP framebuffer is not feasible in WebGL, so the current framing
-// is rendered as a grid of tiles into one big 2D canvas, then downloaded.
 let exporting = false;
+const SS = 2; // supersample per tile then downscale for anti-aliasing
 async function exportHighRes(targetMP = 100) {
-  if (exporting) return;
+  if (exporting || !cloud) return;
   exporting = true;
   const statusEl = document.getElementById("export-status");
-  const aspect = window.innerWidth / window.innerHeight;
-  let bigW = Math.round(Math.sqrt(targetMP * 1e6 * aspect));
-  let bigH = Math.round(bigW / aspect);
-  bigW = Math.min(bigW, 16000);
-  bigH = Math.min(bigH, 16000);
 
-  // Full world rect visible in the current framing.
-  const halfW = (camera.right - camera.left) / 2 / camera.zoom;
-  const halfH = (camera.top - camera.bottom) / 2 / camera.zoom;
-  const wl = camera.position.x - halfW, wr = camera.position.x + halfW;
-  const wb = camera.position.y - halfH, wt = camera.position.y + halfH;
+  // Content rect currently visible (in content units).
+  const s = world.scale.x;
+  const cl = (0 - world.x) / s, ct = (0 - world.y) / s;
+  const rectW = app.screen.width / s, rectH = app.screen.height / s;
+  const aspect = rectW / rectH;
 
-  const SS = 2; // supersample each tile then downscale for smooth anti-aliasing
-  const TILE = 1600;
-  const tilesX = Math.ceil(bigW / TILE);
-  const tilesY = Math.ceil(bigH / TILE);
-  const tileW = Math.ceil(bigW / tilesX);
-  const tileH = Math.ceil(bigH / tilesY);
+  let bigW = Math.min(16000, Math.round(Math.sqrt(targetMP * 1e6 * aspect)));
+  let bigH = Math.min(16000, Math.round(bigW / aspect));
+  const TILE = 2000;
+  const tilesX = Math.ceil(bigW / TILE), tilesY = Math.ceil(bigH / TILE);
+  const tileW = Math.ceil(bigW / tilesX), tileH = Math.ceil(bigH / tilesY);
 
   const big = document.createElement("canvas");
   big.width = tileW * tilesX;
@@ -130,125 +165,66 @@ async function exportHighRes(targetMP = 100) {
   const ctx = big.getContext("2d");
   ctx.imageSmoothingEnabled = true;
   ctx.imageSmoothingQuality = "high";
+  ctx.fillStyle = BG_CSS;
+  ctx.fillRect(0, 0, big.width, big.height);
 
-  const savedRatio = renderer.getPixelRatio();
-  renderer.setPixelRatio(1);
-  renderer.setSize(tileW * SS, tileH * SS, false);
-
-  const expCam = new THREE.OrthographicCamera(0, 1, 1, 0, 0.1, 100);
-  expCam.position.set(0, 0, 10);
+  const saved = { scale: world.scale.x, x: world.x, y: world.y };
+  const subW = rectW / tilesX, subH = rectH / tilesY;
 
   for (let iy = 0; iy < tilesY; iy++) {
     for (let ix = 0; ix < tilesX; ix++) {
-      expCam.left = wl + ((wr - wl) * ix) / tilesX;
-      expCam.right = wl + ((wr - wl) * (ix + 1)) / tilesX;
-      expCam.top = wt - ((wt - wb) * iy) / tilesY;
-      expCam.bottom = wt - ((wt - wb) * (iy + 1)) / tilesY;
-      expCam.zoom = 1;
-      expCam.updateProjectionMatrix();
-      updatePointSize(cloud, expCam, tileH * SS);
-      renderer.render(scene, expCam);
-      // Downscale the supersampled tile into the big canvas for crisp AA edges.
-      ctx.drawImage(renderer.domElement, ix * tileW, iy * tileH, tileW, tileH);
+      const subL = cl + subW * ix;
+      const subT = ct + subH * iy;
+      const tileScale = (tileW * SS) / subW;
+      world.scale.set(tileScale);
+      world.position.set(-subL * tileScale, -subT * tileScale);
+      const rt = RenderTexture.create({ width: tileW * SS, height: tileH * SS });
+      app.renderer.render({ container: world, target: rt });
+      const tileCanvas = app.renderer.extract.canvas(rt);
+      ctx.drawImage(tileCanvas, ix * tileW, iy * tileH, tileW, tileH);
+      rt.destroy(true);
     }
     if (statusEl) {
       statusEl.textContent = `Rendering ${Math.round(((iy + 1) / tilesY) * 100)}%…`;
-      await new Promise((r) => setTimeout(r)); // let the UI paint
+      await new Promise((r) => setTimeout(r));
     }
   }
 
-  // Restore live rendering.
-  renderer.setPixelRatio(savedRatio);
-  renderer.setSize(window.innerWidth, window.innerHeight);
+  world.scale.set(saved.scale);
+  world.position.set(saved.x, saved.y);
 
   big.toBlob((blob) => {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `reigen-${big.width}x${big.height}.png`;
+    a.download = `points-${big.width}x${big.height}.png`;
     a.click();
     URL.revokeObjectURL(url);
     if (statusEl) statusEl.textContent = `Saved ${big.width}×${big.height}px`;
     exporting = false;
   }, "image/png");
 }
-
 document.getElementById("export-btn").addEventListener("click", () => {
   const el = document.getElementById("export-status");
   if (el) el.textContent = "Preparing…";
-  // Defer so the label shows before the heavy work starts.
   setTimeout(() => exportHighRes(100), 30);
 });
 
-// --- Load a raw image as the reference cloud --------------------------------
-const loadStatus = document.getElementById("load-status");
-function useImage(img) {
-  setCloud(buildPointsFromImage(img, { maxSample: 1200 }));
-  if (loadStatus) loadStatus.textContent = `Loaded image (${cloud.userData.count.toLocaleString()} pts)`;
-}
-async function useImageFile(file) {
-  if (!file || !file.type.startsWith("image/")) return;
-  if (loadStatus) loadStatus.textContent = "Loading image…";
-  try {
-    useImage(await loadImageFromFile(file));
-  } catch {
-    if (loadStatus) loadStatus.textContent = "Could not read that image.";
-  }
-}
-
-// Picker button + hidden input.
-const fileInput = document.getElementById("image-input");
-document.getElementById("load-btn").addEventListener("click", () => fileInput.click());
-fileInput.addEventListener("change", () => useImageFile(fileInput.files[0]));
-
-// Load from a pasted image URL (fetched client-side; needs the host to allow
-// cross-origin reads). Nothing is stored or published by this project.
-const urlInput = document.getElementById("url-input");
-async function useImageURL() {
-  const url = urlInput.value.trim();
-  if (!url) return;
-  if (loadStatus) loadStatus.textContent = "Loading URL…";
-  try {
-    useImage(await loadImageFromURL(url));
-  } catch {
-    if (loadStatus) loadStatus.textContent = "Could not load that URL (blocked by CORS, or not an image).";
-  }
-}
-document.getElementById("url-btn").addEventListener("click", useImageURL);
-urlInput.addEventListener("keydown", (e) => { if (e.key === "Enter") useImageURL(); });
-
-// Drag-and-drop anywhere on the canvas.
-canvas.addEventListener("dragover", (e) => e.preventDefault());
-canvas.addEventListener("drop", (e) => {
-  e.preventDefault();
-  useImageFile(e.dataTransfer.files[0]);
+// --- Tween loop -------------------------------------------------------------
+app.ticker.add((ticker) => {
+  if (!tween) return;
+  tween.t = Math.min(1, tween.t + ticker.deltaMS / 900);
+  const e = easeInOut(tween.t);
+  world.scale.set(lerp(tween.from.scale, tween.to.scale, e));
+  world.position.set(lerp(tween.from.x, tween.to.x, e), lerp(tween.from.y, tween.to.y, e));
+  if (tween.t >= 1) tween = null;
 });
 
-// If the repo ships a ./reference.png, use it automatically on load.
-loadImageFromURL("./reference.png")
-  .then((img) => useImage(img))
-  .catch(() => {}); // no reference bundled — keep the built-in vector art
-
-// --- Render loop ------------------------------------------------------------
-const clock = new THREE.Clock();
-function animate() {
-  requestAnimationFrame(animate);
-  const dt = clock.getDelta();
-  if (exporting) return; // export drives its own tiled renders
-
-  if (tween) {
-    tween.t = Math.min(1, tween.t + dt / 0.9);
-    const e = easeInOut(tween.t);
-    camera.position.x = THREE.MathUtils.lerp(tween.from.x, tween.to.x, e);
-    camera.position.y = THREE.MathUtils.lerp(tween.from.y, tween.to.y, e);
-    camera.zoom = THREE.MathUtils.lerp(tween.from.zoom, tween.to.zoom, e);
-    camera.updateProjectionMatrix();
-    if (tween.t >= 1) tween = null;
+// --- Load the bundled CC0 default (falls back to ./reference.png) -----------
+(async () => {
+  for (const src of ["./assets/anime-portrait-cc0.png", "./reference.png"]) {
+    try { useImage(await loadImageFromURL(src)); return; }
+    catch { /* try next */ }
   }
-
-  cloud.position.y = Math.sin(clock.elapsedTime * 1.1) * 0.012;
-
-  updatePointSize(cloud, camera, renderer.domElement.height);
-  renderer.render(scene, camera);
-}
-animate();
+  if (loadStatus) loadStatus.textContent = "Load an image to begin.";
+})();
