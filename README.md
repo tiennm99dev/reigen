@@ -5,7 +5,9 @@ self-proclaimed "Greatest Psychic of the 21st Century" from ONE's *Mob Psycho
 100*. A single scrolling page of plain HTML, CSS and ES modules — no build step,
 no framework, no dependencies to install.
 
-**Live:** https://tiennm99.github.io/reigen/
+**Live:** https://tiennm99.github.io/reigen/ — also mirrored at
+https://reigen.web.app. The GitHub Pages URL is canonical; the page carries a
+`rel="canonical"` link so the two copies aren't treated as duplicates.
 
 ## What's on it
 
@@ -62,11 +64,31 @@ system-font fallbacks, so the page still sets sensibly if the request fails.
 
 ## Deployment
 
-Pushing to `main` runs `.github/workflows/deploy-pages.yml`, which publishes the
-repo root to GitHub Pages. Enable it once under **Settings → Pages → Source:
-GitHub Actions**. Because it deploys to a project subpath (`/reigen/`), all
-asset paths must stay relative (`./css/style.css`) — a root-absolute path would
-404 in production.
+Pushing to `main` deploys to **two hosts in parallel**, both from the same
+commit:
+
+- `.github/workflows/deploy-pages.yml` → **GitHub Pages** (canonical) at
+  `tiennm99.github.io/reigen`. Enable once under **Settings → Pages → Source:
+  GitHub Actions**.
+- `.github/workflows/firebase-hosting-merge.yml` → **Firebase Hosting** (mirror)
+  at `reigen.web.app`, authenticating with the `FIREBASE_SERVICE_ACCOUNT_REIGEN`
+  repo secret. A second workflow posts a preview channel on pull requests.
+
+Two things to keep in mind when changing either:
+
+- **Paths must stay relative** (`./css/style.css`). Pages serves from a project
+  subpath (`/reigen/`), so a root-absolute path 404s there even though it would
+  work fine on Firebase.
+- **Neither host may publish `plans/`.** The Pages workflow stages an explicit
+  file list into `_site`; `firebase.json` excludes `plans/**` from its ignore
+  list. Both were leaking those internal notes at one point — if you add a new
+  directory of working files, exclude it in both places.
+
+`firebase.json` deliberately has **no `rewrites`**. `firebase init` offers a
+single-page-app catch-all (`** → /index.html`); this site is one page of anchor
+links with no client-side router, so that rewrite would only turn every missing
+asset into an HTTP 200 serving the whole page, hiding broken links from us and
+feeding duplicate URLs to crawlers.
 
 ## Licensing and credits
 
