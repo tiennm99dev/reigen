@@ -1,51 +1,573 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Anime portrait in points — PixiJS</title>
-    <link rel="stylesheet" href="./css/style.css" />
-    <!-- PixiJS v8 (2D-native WebGL) via an import map so main.js can `import ... from "pixi.js"` -->
-    <script type="importmap">
-      {
-        "imports": {
-          "pixi.js": "https://cdn.jsdelivr.net/npm/pixi.js@8/dist/pixi.min.mjs"
-        }
-      }
-    </script>
-  </head>
-  <body>
-    <div id="app">
-      <canvas id="scene"></canvas>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reigen Arataka — Greatest Psychic of the 21st Century (Self-Proclaimed) | Fan Tribute</title>
+<meta name="description" content="An unofficial fan tribute to Reigen Arataka of Mob Psycho 100: the con man with no psychic powers who turned out to be the best mentor in the series. Profile, personality, real skills vs. performed techniques, and quotes.">
+<meta name="author" content="tiennm99">
+<meta name="theme-color" content="#0c0c11">
+<meta name="color-scheme" content="dark">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Reigen Arataka — Fan Tribute">
+<meta property="og:description" content="Unofficial fan page for Reigen Arataka of Mob Psycho 100. Zero psychic power. One hundred percent confidence.">
+<meta property="og:url" content="https://tiennm99.github.io/reigen/">
+<link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400..700&family=Newsreader:ital,opsz,wght@0,6..72,500;1,6..72,400;1,6..72,500&display=swap">
+<link rel="stylesheet" href="./css/style.css">
+<script>
+/* Arms the scroll-reveal hidden state before first paint (avoids a flash of
+   already-visible content). Failsafe: if js/main.js never runs — blocked,
+   404, syntax error, CSP — the class is dropped again so nothing stays
+   invisible. With JavaScript disabled this script never runs at all and the
+   page renders fully visible by default. */
+(function () {
+  var root = document.documentElement;
+  root.classList.add('js');
+  setTimeout(function () {
+    if (root.dataset.revealReady !== 'true') root.classList.remove('js');
+  }, 1200);
+})();
+</script>
+</head>
+<body>
 
-      <header id="titlebar">
-        <h1>Anime portrait &middot; drawn in points</h1>
-        <p>PixiJS point cloud — load any image to reproduce it with points</p>
-      </header>
+<a class="skip-link" href="#main">Skip to content</a>
 
-      <div id="shot-bar" role="toolbar" aria-label="Camera shots"></div>
+<!-- Original hand-authored SVG symbols. Decorative only. -->
+<svg class="sprite" aria-hidden="true" focusable="false" width="0" height="0"><defs>
+  <symbol id="i-salt" viewBox="0 0 64 40">
+    <g fill="currentColor">
+      <circle cx="4" cy="30" r="3.2"/><circle cx="12" cy="24" r="2.4"/><circle cx="19" cy="31" r="1.6"/>
+      <circle cx="22" cy="17" r="3"/><circle cx="30" cy="24" r="1.9"/><circle cx="31" cy="10" r="2.2"/>
+      <circle cx="38" cy="18" r="1.4"/><circle cx="40" cy="29" r="2.6"/><circle cx="44" cy="8" r="1.7"/>
+      <circle cx="48" cy="21" r="2.9"/><circle cx="52" cy="33" r="1.5"/><circle cx="55" cy="13" r="2.1"/>
+      <circle cx="60" cy="26" r="1.3"/><circle cx="26" cy="36" r="1.2"/><circle cx="34" cy="4" r="1.1"/>
+      <circle cx="8" cy="14" r="1.5"/><circle cx="15" cy="6" r="1.2"/>
+    </g>
+  </symbol>
+  <symbol id="i-quote" viewBox="0 0 40 32">
+    <path fill="currentColor" d="M0 32V16.8C0 7.5 5.4 1.2 15 0l1.8 5.4C11.4 6.9 8.4 10 8.1 14.4H15V32H0Zm23.2 0V16.8C23.2 7.5 28.6 1.2 38.2 0L40 5.4c-5.4 1.5-8.4 4.6-8.7 9h6.9V32H23.2Z"/>
+  </symbol>
+</defs></svg>
 
-      <footer id="hint">
-        <span>Scroll to zoom &middot; drag an image in to use it as reference</span>
-        <button id="load-btn" type="button">Load image</button>
-        <input id="url-input" type="url" placeholder="…or paste image URL" />
-        <button id="url-btn" type="button">Load URL</button>
-        <span id="load-status"></span>
-        <button id="export-btn" type="button">Download ~100 MP PNG</button>
-        <span id="export-status"></span>
-        <input id="image-input" type="file" accept="image/*" hidden />
-      </footer>
+<header class="site-header" id="top">
+  <div class="site-header__inner">
+    <a class="brand" href="#top">
+      <span class="brand__mark" lang="ja" aria-hidden="true">霊</span>
+      <span class="brand__text">
+        <b>Reigen Arataka</b>
+        <small>unofficial fan tribute</small>
+      </span>
+    </a>
+    <nav class="site-nav" aria-label="Sections of this page">
+      <ul>
+        <li><a href="#profile">Profile</a></li>
+        <li><a href="#who">Who He Is</a></li>
+        <li><a href="#personality">Personality</a></li>
+        <li><a href="#abilities">Abilities</a></li>
+        <li><a href="#quotes">Quotes</a></li>
+        <li><a href="#people">People</a></li>
+        <li><a href="#arcs">Arcs</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
 
-      <p id="disclaimer">
-        Default image: “Anime girl” by oksmith (Open Clipart),
-        <a href="https://commons.wikimedia.org/wiki/File:Anime_girl_publicdomainq.png" target="_blank" rel="noopener">CC0 / public domain</a>.
-        Load your own image to reproduce it with points — images you load are
-        processed locally in your browser and never uploaded. Do not load
-        copyrighted images you don’t have the right to use. Non-commercial demo;
-        any concern: <a href="https://github.com/tiennm99" target="_blank" rel="noopener">github.com/tiennm99</a>.
+<main id="main">
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero__art" aria-hidden="true">
+      <span class="aura aura--a"></span>
+      <span class="aura aura--b"></span>
+      <span class="aura aura--c"></span>
+      <svg class="rays" viewBox="0 0 400 400" focusable="false">
+        <g stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+          <path d="M200 26v54M200 320v54M26 200h54M320 200h54"/>
+          <path d="M77 77l38 38M285 285l38 38M323 77l-38 38M115 285l-38 38" opacity=".7"/>
+        </g>
+        <circle cx="200" cy="200" r="150" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="2 10" opacity=".55"/>
+        <circle cx="200" cy="200" r="186" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="1 14" opacity=".35"/>
+      </svg>
+      <!-- Abstract suit-and-tie figure: original geometry, no facial features. -->
+      <svg class="figure" viewBox="0 0 300 400" focusable="false">
+        <path class="fg-neck" d="M134 156h32v42h-32z"/>
+        <ellipse class="fg-head" cx="150" cy="112" rx="53" ry="63"/>
+        <path class="fg-hair" d="M96 118C92 62 118 40 152 40s56 26 54 82c-4-18-16-30-34-30-26 0-56 10-64 30-4-2-8-2-12-4Z"/>
+        <path class="fg-jacket" d="M150 184c-40 4-84 20-102 40-18 20-26 74-28 176h260c-2-102-10-156-28-176-18-20-62-36-102-40Z"/>
+        <path class="fg-shirt" d="M116 192 150 184l34 8-34 88Z"/>
+        <path class="fg-lapel" d="M116 192 150 184v22l-48 58-6-32Zm68 0L150 184v22l48 58 6-32Z"/>
+        <path class="fg-tie" d="M141 197h18l5 16h-28Z"/>
+        <path class="fg-tie2" d="M136 214h28l-7 92-7 14-7-14Z"/>
+      </svg>
+    </div>
+
+    <div class="hero__body">
+      <p class="kicker kicker--strike"><span>Self-proclaimed</span></p>
+      <h1 id="hero-title" class="hero__title">
+        <span>Reigen</span> <span>Arataka</span>
+      </h1>
+      <p class="hero__ja" lang="ja">霊幻新隆</p>
+      <p class="hero__claim">&ldquo;The Greatest Psychic of the&nbsp;21st Century&rdquo;</p>
+      <p class="hero__tagline">
+        Zero psychic ability. A pocket full of salt, a very good massage,
+        and enough nerve to carry an entire exorcism business &mdash; and,
+        somehow, the most important adult in a psychic kid&rsquo;s life.
+      </p>
+
+      <ul class="stat-chips">
+        <li><span class="stat-chips__k">Psychic power</span><span class="stat-chips__v stat-chips__v--zero">0%</span></li>
+        <li><span class="stat-chips__k">Confidence</span><span class="stat-chips__v">100%</span></li>
+      </ul>
+
+      <p class="hero__note">
+        Fan-made tribute page. Not affiliated with the creators of <cite>Mob Psycho 100</cite>.
+        All artwork here is original CSS&nbsp;/&nbsp;SVG &mdash; no official images are used.
       </p>
     </div>
 
-    <script type="module" src="./js/main.js"></script>
-  </body>
+    <p class="scroll-cue" aria-hidden="true"><span></span>scroll</p>
+  </section>
+
+  <div class="salt-rule" aria-hidden="true"></div>
+
+  <!-- ===================== PROFILE ===================== -->
+  <section id="profile" class="section" aria-labelledby="h-profile">
+    <div class="section__head" data-reveal>
+      <p class="section__num" aria-hidden="true">01</p>
+      <h2 id="h-profile">Profile</h2>
+      <p class="section__lede">The paperwork behind the persona.</p>
+    </div>
+
+    <!-- Explicit ARIA roles: the narrow-screen layout restyles the table into
+         stacked rows, which would otherwise drop the implicit table semantics. -->
+    <div class="table-scroll" data-reveal>
+      <table class="data-table" role="table">
+        <caption class="visually-hidden">Identity and production details for Reigen Arataka</caption>
+        <tbody role="rowgroup">
+          <tr role="row"><th role="rowheader" scope="row">Name</th><td role="cell">Reigen Arataka <span class="t-ja" lang="ja">霊幻新隆</span></td></tr>
+          <tr role="row"><th role="rowheader" scope="row">Age</th><td role="cell">28</td></tr>
+          <tr role="row"><th role="rowheader" scope="row">Occupation</th><td role="cell">Owner and operator, Spirits and Such Consultation Office</td></tr>
+          <tr role="row"><th role="rowheader" scope="row">Workplace</th><td role="cell">Spirits and Such Consultation Office &mdash; one small rented room</td></tr>
+          <tr role="row"><th role="rowheader" scope="row">Affiliations</th><td role="cell">Mentor and employer to Mob (Shigeo Kageyama); works alongside Katsuya Serizawa</td></tr>
+          <tr role="row"><th role="rowheader" scope="row">First appearance (manga)</th><td role="cell">Chapter&nbsp;1</td></tr>
+          <tr role="row"><th role="rowheader" scope="row">First appearance (anime)</th><td role="cell">Season&nbsp;1, Episode&nbsp;1 &mdash; &ldquo;Self-Proclaimed Psychic: Reigen Arataka ~And Mob~&rdquo; (July&nbsp;2016)</td></tr>
+          <tr role="row"><th role="rowheader" scope="row">Japanese voice</th><td role="cell">Takahiro Sakurai</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ===================== WHO HE IS ===================== -->
+  <section id="who" class="section section--who" aria-labelledby="h-who">
+    <div class="section__head" data-reveal>
+      <p class="section__num" aria-hidden="true">02</p>
+      <h2 id="h-who">Who He Is</h2>
+      <p class="section__lede">A fraud, technically. A mentor, actually.</p>
+    </div>
+
+    <div class="prose" data-reveal>
+      <p class="prose__drop">
+        Reigen sells exorcisms he cannot perform. He has no psychic ability whatsoever &mdash; not a
+        flicker &mdash; and he has built a whole small business on the confident opposite claim.
+        His toolkit is salt, showmanship, a sharp read on people, and hands that genuinely know
+        where the knot in your shoulder is.
+      </p>
+      <p>
+        The joke is that his clients still leave better off. What they usually walk in with is
+        loneliness, stress, guilt or self-doubt, and Reigen &mdash; whatever he calls the ritual &mdash;
+        actually listens, gives blunt practical advice, and sends them home lighter. The fake part
+        is the ghost. The help is real.
+      </p>
+      <p>
+        Then a quiet middle-schooler named Shigeo Kageyama &mdash; Mob &mdash; walks in with powers
+        that could level a building, and asks the con man for guidance. Reigen hires him. The money
+        motive is obvious and he never quite pretends otherwise. But what he ends up giving Mob is
+        the one thing no esper in the series can supply: the steady, unglamorous message that
+        <em>power is not the point.</em>
+      </p>
+      <blockquote class="pull">
+        Psychic powers, he tells Mob, are just another trait &mdash; like being fast, or good at
+        exams. What makes a person worth something is how they treat people.
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- ===================== PERSONALITY ===================== -->
+  <section id="personality" class="section" aria-labelledby="h-personality">
+    <div class="section__head" data-reveal>
+      <p class="section__num" aria-hidden="true">03</p>
+      <h2 id="h-personality">Personality</h2>
+      <p class="section__lede">Six traits, pulling in different directions at once.</p>
+    </div>
+
+    <ul class="trait-grid">
+      <li class="trait" data-reveal>
+        <h3>Con artist</h3>
+        <p>Charm, quick thinking and social footwork, deployed to convince paying clients that he is a powerful psychic.</p>
+      </li>
+      <li class="trait" data-reveal>
+        <h3>Emotionally intelligent</h3>
+        <p>Reads a room and a person fast, then adjusts his register to match. The same skill that makes him a good liar makes him a good counsellor.</p>
+      </li>
+      <li class="trait" data-reveal>
+        <h3>Outgoing performer</h3>
+        <p>Personable, verbally confident, entirely comfortable with an audience. Never met a silence he wouldn&rsquo;t fill.</p>
+      </li>
+      <li class="trait" data-reveal>
+        <h3>Protective mentor</h3>
+        <p>Started from self-interest and ended up genuinely invested in Mob&rsquo;s safety, self-esteem and growing up okay.</p>
+      </li>
+      <li class="trait" data-reveal>
+        <h3>Relentlessly pragmatic</h3>
+        <p>Aims at the real problem &mdash; the stress, the loneliness, the self-doubt &mdash; even while performing a supernatural solution to it.</p>
+      </li>
+      <li class="trait" data-reveal>
+        <h3>Flawed, with a floor</h3>
+        <p>Vain, evasive, allergic to accountability. Still refuses to truly hurt a client or exploit a child. He learns humility the hard way.</p>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ===================== ABILITIES ===================== -->
+  <section id="abilities" class="section section--abilities" aria-labelledby="h-abilities">
+    <div class="section__head" data-reveal>
+      <p class="section__num" aria-hidden="true">04</p>
+      <h2 id="h-abilities">What He Can Actually Do</h2>
+      <p class="section__lede">
+        Left column: real, verifiable, unglamorous. Right column: the show.
+      </p>
+    </div>
+
+    <div class="split">
+      <!-- REAL -->
+      <div class="panel panel--real" data-reveal>
+        <p class="panel__tag">Genuine</p>
+        <h3 class="panel__title">Real skills</h3>
+        <p class="panel__intro">
+          One entry below is canon: he has no psychic ability at all. The rest is
+          this fan page&rsquo;s own read on how good he is at things &mdash; the
+          bars are a rough impression, not official stats.
+        </p>
+        <ul class="skill-list">
+          <li>
+            <div class="meter">
+              <p class="meter__head"><span class="meter__label">Massage &amp; acupressure</span><span class="meter__val">Expert</span></p>
+              <span class="meter__track" aria-hidden="true"><span class="meter__fill" style="--pct:94%"></span></span>
+            </div>
+            <p class="skill-list__note">Real acupoint work on shoulder and back tension. The most-used ability he owns.</p>
+          </li>
+          <li>
+            <div class="meter">
+              <p class="meter__head"><span class="meter__label">Counselling &amp; life advice</span><span class="meter__val">Expert</span></p>
+              <span class="meter__track" aria-hidden="true"><span class="meter__fill" style="--pct:90%"></span></span>
+            </div>
+            <p class="skill-list__note">Unlicensed, unbilled, and frequently the actual product being sold.</p>
+          </li>
+          <li>
+            <div class="meter">
+              <p class="meter__head"><span class="meter__label">Persuasion</span><span class="meter__val">Very high</span></p>
+              <span class="meter__track" aria-hidden="true"><span class="meter__fill" style="--pct:88%"></span></span>
+            </div>
+            <p class="skill-list__note">Talks his way into jobs, out of trouble, and around the truth.</p>
+          </li>
+          <li>
+            <div class="meter">
+              <p class="meter__head"><span class="meter__label">Physical fitness</span><span class="meter__val">Surprising</span></p>
+              <span class="meter__track" aria-hidden="true"><span class="meter__fill" style="--pct:72%"></span></span>
+            </div>
+            <p class="skill-list__note">No powers, but agile enough and smart enough about leverage to hold his own in a fight.</p>
+          </li>
+          <li>
+            <div class="meter meter--zero">
+              <p class="meter__head"><span class="meter__label">Psychic ability</span><span class="meter__val">None</span></p>
+              <span class="meter__track" aria-hidden="true"><span class="meter__fill" style="--pct:0%"></span></span>
+            </div>
+            <p class="skill-list__note">Zero. Not weak &mdash; absent. This is the one number on this page that is canon.</p>
+          </li>
+        </ul>
+      </div>
+
+      <!-- PERFORMED -->
+      <div class="panel panel--fake" data-reveal>
+        <p class="panel__tag">Theatre</p>
+        <h3 class="panel__title">&ldquo;Techniques&rdquo;</h3>
+        <p class="panel__intro">Branded, named, and announced at volume. All of it is stagecraft for the client&rsquo;s benefit.</p>
+        <ul class="tech-list">
+          <li class="tech">
+            <svg class="tech__icon" aria-hidden="true" focusable="false"><use href="#i-salt"></use></svg>
+            <h4>Salt Splash</h4>
+            <p>Throw salt at the target while shouting an incantation. Purification, allegedly.</p>
+          </li>
+          <li class="tech">
+            <svg class="tech__icon" aria-hidden="true" focusable="false"><use href="#i-salt"></use></svg>
+            <h4>Salt Heap Punch</h4>
+            <p>A punch, thrown with a salt-encrusted fist, for maximum visual drama.</p>
+          </li>
+          <li class="tech">
+            <svg class="tech__icon" aria-hidden="true" focusable="false"><use href="#i-salt"></use></svg>
+            <h4>Black Arts Crush</h4>
+            <p>A frightening name applied to what is, in fact, a very competent massage.</p>
+          </li>
+          <li class="tech">
+            <svg class="tech__icon" aria-hidden="true" focusable="false"><use href="#i-salt"></use></svg>
+            <h4>Graphic Purification</h4>
+            <p>Editing the evil spirit out of the client&rsquo;s photograph. On a computer. That is the whole technique.</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="punchline" data-reveal>
+      Nothing in the right column works.
+      Everything in the left column does.
+    </p>
+  </section>
+
+  <!-- ===================== QUOTES ===================== -->
+  <section id="quotes" class="section section--quotes" aria-labelledby="h-quotes">
+    <div class="section__head" data-reveal>
+      <p class="section__num" aria-hidden="true">05</p>
+      <h2 id="h-quotes">In His Own Words</h2>
+      <p class="section__lede">The fraud gives the best advice in the series.</p>
+    </div>
+
+    <div class="quote-stack">
+      <figure class="quote quote--lead" data-reveal>
+        <svg class="quote__glyph" aria-hidden="true" focusable="false"><use href="#i-quote"></use></svg>
+        <blockquote>
+          <p>Listen. Just because you have these psychic powers and abilities, it doesn&rsquo;t mean
+          you&rsquo;re any less of a human than anyone else. There are people who are fast, people who
+          are book smart, and people with strong body odor. Psychic powers are just like that:
+          another characteristic.</p>
+        </blockquote>
+      </figure>
+
+      <figure class="quote" data-reveal>
+        <svg class="quote__glyph" aria-hidden="true" focusable="false"><use href="#i-quote"></use></svg>
+        <blockquote><p>In the end, you&rsquo;re the one who&rsquo;s going to get hurt. When things go
+        south, it&rsquo;s ok to run away and save yourself!</p></blockquote>
+      </figure>
+
+      <figure class="quote" data-reveal>
+        <svg class="quote__glyph" aria-hidden="true" focusable="false"><use href="#i-quote"></use></svg>
+        <blockquote><p>Being confident about your powers is fine, but you mustn&rsquo;t get conceited.
+        Depending on how we use our powers, they can also be deadly weapons. They&rsquo;re just like
+        knives.</p></blockquote>
+      </figure>
+
+      <figure class="quote" data-reveal>
+        <svg class="quote__glyph" aria-hidden="true" focusable="false"><use href="#i-quote"></use></svg>
+        <blockquote><p>Your life is your own, and it&rsquo;s up to you to live it exactly the way you
+        want.</p></blockquote>
+      </figure>
+
+      <figure class="quote quote--short" data-reveal>
+        <svg class="quote__glyph" aria-hidden="true" focusable="false"><use href="#i-quote"></use></svg>
+        <blockquote><p>The truth behind one&rsquo;s charm is kindness.</p></blockquote>
+      </figure>
+    </div>
+
+    <p class="fine-print fine-print--wide" data-reveal>
+      Wording follows the English translations that circulate most widely. Public sources do not
+      pin these lines to specific episodes or chapters, so no citation is given rather than a
+      guessed one. Phrasing varies between subtitle and dub versions.
+    </p>
+  </section>
+
+  <!-- ===================== PEOPLE ===================== -->
+  <section id="people" class="section" aria-labelledby="h-people">
+    <div class="section__head" data-reveal>
+      <p class="section__num" aria-hidden="true">06</p>
+      <h2 id="h-people">The People Around Him</h2>
+      <p class="section__lede">One office, several strays.</p>
+    </div>
+
+    <ul class="rel-list">
+      <li class="rel rel--primary" data-reveal>
+        <p class="rel__role">Employee &middot; mentee &middot; chosen family</p>
+        <h3>Mob <span class="rel__alt">Shigeo Kageyama</span></h3>
+        <p>The genuine psychic who works for the fake one. Reigen&rsquo;s motive slides from
+        &ldquo;useful asset&rdquo; to &ldquo;this kid has to turn out okay,&rdquo; and that shift is
+        the spine of his whole character.</p>
+      </li>
+      <li class="rel" data-reveal>
+        <p class="rel__role">Colleague</p>
+        <h3>Katsuya Serizawa</h3>
+        <p>Comes to work at Spirits and Such alongside Reigen, as the office &mdash; and Reigen &mdash;
+        get put back together on a healthier footing.</p>
+      </li>
+      <li class="rel" data-reveal>
+        <p class="rel__role">Uninvited</p>
+        <h3>Dimple</h3>
+        <p>An evil spirit who tried to make Reigen his puppet. Reigen&rsquo;s countermeasure was to
+        pretend he could not see him. Their dynamic stays comedic friction, never alliance.</p>
+      </li>
+      <li class="rel" data-reveal>
+        <p class="rel__role">Mob&rsquo;s brother</p>
+        <h3>Ritsu Kageyama</h3>
+        <p>Reigen occasionally goes to him for help or an opinion, and &mdash; notably &mdash; treats
+        him as an equal while doing it.</p>
+      </li>
+      <li class="rel" data-reveal>
+        <p class="rel__role">Rival, then not</p>
+        <h3>Teruki Hanazawa</h3>
+        <p>A genuinely powerful esper who starts out clashing with Reigen and ends up respecting the
+        man for the one thing he has that powers can&rsquo;t buy.</p>
+      </li>
+      <li class="rel" data-reveal>
+        <p class="rel__role">Client, then friend</p>
+        <h3>Tome Kurata</h3>
+        <p>Arrives as business and stays as a fixture in the orbit of the office.</p>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ===================== ARCS ===================== -->
+  <section id="arcs" class="section section--arcs" aria-labelledby="h-arcs">
+    <div class="section__head" data-reveal>
+      <p class="section__num" aria-hidden="true">07</p>
+      <h2 id="h-arcs">Story Arcs</h2>
+      <p class="section__lede">
+        The first two are spoiler-free. Everything after is folded away &mdash; open only what you
+        want to know.
+      </p>
+    </div>
+
+    <ol class="timeline">
+      <li class="arc" data-reveal>
+        <p class="arc__when">Opening</p>
+        <h3>Introduction</h3>
+        <p>Reigen meets Mob. The con-artist premise and the Spirits and Such office are laid out,
+        and the mentor&ndash;apprentice arrangement that carries the series begins.</p>
+      </li>
+
+      <li class="arc" data-reveal>
+        <p class="arc__when">Mid-series</p>
+        <h3>Business as usual</h3>
+        <p>A run of client jobs and staged exorcisms. Reigen keeps the fraud running while getting
+        steadily closer to Mob, tries his hand at expanding the business, and performs his named
+        &ldquo;techniques&rdquo; with total conviction.</p>
+      </li>
+
+      <li class="arc arc--spoiler" data-reveal>
+        <details class="spoiler">
+          <summary>
+            <span class="spoiler__badge">Spoilers</span>
+            <span class="spoiler__label">Later arc &mdash; the turn</span>
+          </summary>
+          <div class="spoiler__body">
+            <p class="arc__when">Separation</p>
+            <h3>Rock bottom</h3>
+            <p>A public scandal drives Reigen and Mob apart. The press and public opinion turn on
+            him, and he ends up isolated and out of work. Stripped of the act, he has to look at how
+            hollow his life had become &mdash; and how much of it he had been outsourcing to a
+            fourteen-year-old.</p>
+          </div>
+        </details>
+      </li>
+
+      <li class="arc arc--spoiler" data-reveal>
+        <details class="spoiler">
+          <summary>
+            <span class="spoiler__badge">Spoilers</span>
+            <span class="spoiler__label">Later arc &mdash; the rebuild</span>
+          </summary>
+          <div class="spoiler__body">
+            <p class="arc__when">Reunion &amp; rebuild</p>
+            <h3>Doing it properly</h3>
+            <p>Reigen and Mob reconcile. He reassesses how he has been living, brings Serizawa in,
+            and puts Spirits and Such back together on an honest footing &mdash; choosing actual
+            self-improvement over another, better lie.</p>
+          </div>
+        </details>
+      </li>
+
+      <li class="arc arc--spoiler" data-reveal>
+        <details class="spoiler">
+          <summary>
+            <span class="spoiler__badge">Spoilers</span>
+            <span class="spoiler__label">Finale &mdash; where he lands</span>
+          </summary>
+          <div class="spoiler__body">
+            <p class="arc__when">Finale</p>
+            <h3>The measure of him</h3>
+            <p>In the climactic confrontation Reigen is support, not spectacle. He never acquires a
+            single power. His arc resolves instead into something rarer in this genre: a stable,
+            caring adult that Mob can actually rely on.</p>
+          </div>
+        </details>
+      </li>
+    </ol>
+
+    <p class="fine-print fine-print--wide" data-reveal>
+      Arcs are listed in order of occurrence. Exact episode and chapter ranges are not stated here
+      because public sources did not confirm them consistently.
+    </p>
+  </section>
+
+</main>
+
+<div class="salt-rule" aria-hidden="true"></div>
+
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <section class="disclaimer" aria-labelledby="h-disclaimer">
+      <h2 id="h-disclaimer">Disclaimer</h2>
+      <p>
+        This is an <strong>unofficial, fan-made, non-commercial tribute page</strong>. It is not
+        affiliated with, authorised by, licensed by or endorsed by the rights holders of
+        <cite>Mob Psycho 100</cite>.
+      </p>
+      <p>
+        <cite>Mob Psycho 100</cite>, Reigen Arataka and all related characters and elements are the
+        property of <strong>ONE</strong>, <strong>Shogakukan</strong> and <strong>studio Bones</strong>.
+        All rights in the series belong to them.
+      </p>
+      <p>
+        No official artwork, screenshots, character images or logos are used anywhere on this page.
+        Every visual element here &mdash; the figure, the aura, the salt motifs, the meters &mdash; is
+        original CSS and SVG authored for this page. Quotations are short excerpts included for
+        commentary and identification.
+      </p>
+      <p>
+        If you hold rights in the series and have any concern about this page, please get in touch
+        via <a href="https://github.com/tiennm99" rel="noopener">github.com/tiennm99</a> and it will
+        be amended or taken down.
+      </p>
+    </section>
+
+    <section class="sources" aria-labelledby="h-sources">
+      <h2 id="h-sources">Fact sources</h2>
+      <p class="sources__intro">Details on this page were compiled from:</p>
+      <ul>
+        <li><a href="https://mob-psycho-100.fandom.com/wiki/Arataka_Reigen" rel="noopener nofollow">Mob Psycho 100 Wiki &mdash; Arataka Reigen</a></li>
+        <li><a href="https://gamerant.com/mob-psycho-100-who-is-reigen/" rel="noopener nofollow">GameRant &mdash; Who is Arataka Reigen?</a></li>
+        <li><a href="https://gamerant.com/mob-psycho-100-main-characters-age-height-birthday/" rel="noopener nofollow">GameRant &mdash; Main characters&rsquo; age, height &amp; birthday</a></li>
+        <li><a href="https://www.behindthevoiceactors.com/tv-shows/Mob-Psycho-100/" rel="noopener nofollow">Behind The Voice Actors &mdash; Mob Psycho 100 cast</a></li>
+        <li><a href="https://en.wikipedia.org/wiki/Takahiro_Sakurai" rel="noopener nofollow">Wikipedia &mdash; Takahiro Sakurai</a></li>
+        <li><a href="https://www.imdb.com/title/tt6014452/" rel="noopener nofollow">IMDb &mdash; Episode 1, &ldquo;Self-Proclaimed Psychic: Reigen Arataka ~And Mob~&rdquo;</a></li>
+        <li><a href="https://collider.com/why-we-love-mob-psycho-100-reigen-arataka/" rel="noopener nofollow">Collider &mdash; Why we love Reigen Arataka</a></li>
+        <li><a href="https://www.cbr.com/mob-psycho-100-reigen-arataka-life-lessons/" rel="noopener nofollow">CBR &mdash; Life lessons from Reigen Arataka</a></li>
+        <li><a href="https://otakukart.com/best-quotes-by-reigen-arataka-from-mob-psycho-100/" rel="noopener nofollow">OtakuKart &mdash; Best Reigen Arataka quotes</a></li>
+      </ul>
+      <p class="fine-print">
+        Claims that sources disagreed on, or that could not be verified, were left off this page
+        rather than published as fact.
+      </p>
+    </section>
+  </div>
+
+  <p class="site-footer__base">
+    <span lang="ja" aria-hidden="true">霊</span>
+    Built as a fan tribute &middot; static HTML, CSS and a little JavaScript &middot;
+    <a href="https://github.com/tiennm99" rel="noopener">github.com/tiennm99</a>
+  </p>
+</footer>
+
+<script type="module" src="./js/main.js"></script>
+</body>
 </html>
