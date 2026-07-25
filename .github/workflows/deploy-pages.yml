@@ -29,10 +29,18 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
+      # plans/ holds internal working notes. Publishing the repo root would
+      # serve them at /plans/reports/..., so stage only what the site needs.
+      - name: Stage site files
+        run: |
+          mkdir -p _site
+          cp index.html README.md LICENSE .nojekyll _site/
+          cp -r css js assets _site/
+
       - name: Upload site artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: _site
 
       - name: Deploy
         id: deployment

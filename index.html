@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Reigen Arataka — Greatest Psychic of the 21st Century (Self-Proclaimed) | Fan Tribute</title>
-<meta name="description" content="An unofficial fan tribute to Reigen Arataka of Mob Psycho 100: the con man with no psychic powers who turned out to be the best mentor in the series. Profile, personality, real skills vs. performed techniques, and quotes.">
+<meta name="description" content="An unofficial fan tribute to Reigen Arataka of Mob Psycho 100: the con man with no psychic powers who turned out to be the best mentor in the series. Profile, origin, manga-vs-anime design, real skills vs. performed techniques, quotes and trivia.">
 <meta name="author" content="tiennm99">
 <meta name="theme-color" content="#0c0c11">
 <meta name="color-scheme" content="dark">
@@ -36,8 +36,83 @@
 
 <a class="skip-link" href="#main">Skip to content</a>
 
-<!-- Original hand-authored SVG symbols. Decorative only. -->
+<!-- ==================================================================
+     Original hand-authored SVG. Decorative only, never announced.
+     #i-figure is this page's own stylised portrait of the character:
+     hand-plotted geometry, no traced or embedded official artwork.
+     Every fill reads a CSS custom property, so the same drawing can be
+     re-coloured for the manga and anime palettes further down the page.
+     ================================================================== -->
 <svg class="sprite" aria-hidden="true" focusable="false" width="0" height="0"><defs>
+
+  <pattern id="p-halftone" width="7" height="7" patternUnits="userSpaceOnUse">
+    <circle cx="3.5" cy="3.5" r="1.3" fill="var(--fig-skin-3)"/>
+  </pattern>
+
+  <linearGradient id="g-dotfade" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0" stop-color="#fff" stop-opacity="0"/>
+    <stop offset="1" stop-color="#fff" stop-opacity="1"/>
+  </linearGradient>
+  <mask id="m-dotfade" maskContentUnits="objectBoundingBox">
+    <rect x="0" y="0" width="1" height="1" fill="url(#g-dotfade)"/>
+  </mask>
+
+  <clipPath id="c-head">
+    <path d="M176 204C176 130 213 96 261 96C309 96 346 130 346 204C346 256 332 296 306 322C292 337 277 347 261 347C245 347 230 337 216 322C190 296 176 256 176 204Z"/>
+  </clipPath>
+
+  <symbol id="i-figure" viewBox="0 0 520 700">
+    <!-- Styles live inside the symbol so they are cloned into each <use>
+         shadow tree. Every fill reads an inherited custom property, which is
+         what makes the manga / anime recolour possible from one drawing. -->
+    <style>
+      /* Each var carries a literal fallback: `fill` inherits, so an undefined
+         custom property would otherwise resolve to the inherited value and
+         paint the shape solid black. */
+      .fg-jacket { fill: var(--fig-suit, #3b3b47); }
+      .fg-lapel  { fill: var(--fig-suit-2, #26262f); }
+      .fg-shirt  { fill: var(--fig-shirt, #ece7dd); }
+      .fg-collar { fill: var(--fig-shirt-2, #c8c2b5); }
+      .fg-tie    { fill: var(--fig-tie, #ef5f96); }
+      .fg-tie2   { fill: var(--fig-tie-2, #c9265d); }
+      .fg-head, .fg-neck  { fill: var(--fig-skin, #e8c69e); }
+      .fg-shade  { fill: var(--fig-skin-2, #c69a6b); }
+      .fg-ear, .fg-shade2 { fill: var(--fig-skin-3, #a3763f); }
+      .fg-hair   { fill: var(--fig-hair, #c9884a); }
+      .fg-hair2  { fill: var(--fig-hair-2, #e0aa72); }
+      .fg-face   { fill: none; stroke: var(--fig-line, #47331f); stroke-width: 5;
+                   stroke-linecap: round; stroke-linejoin: round; }
+    </style>
+    <!-- torso: shoulders, open shirt, notch lapels, knotted tie -->
+    <path class="fg-jacket" d="M261 372c-54 8-107 27-146 56C69 462 44 546 34 700h454c-10-154-35-238-81-272-39-29-92-48-146-56Z"/>
+    <path class="fg-shirt"  d="M212 396 261 372 310 396 296 508 261 552 226 508Z"/>
+    <path class="fg-collar" d="M212 396 259 378 252 428 227 456Z"/>
+    <path class="fg-collar" d="M310 396 263 378 270 428 295 456Z"/>
+    <path class="fg-tie"    d="M247 400h28l9 30h-46Z"/>
+    <path class="fg-tie2"   d="M241 432h40l9 150-29 52-29-52Z"/>
+    <path class="fg-lapel"  d="M208 392 138 440 220 590 252 484Z"/>
+    <path class="fg-lapel"  d="M314 392 384 440 302 590 270 484Z"/>
+    <!-- head: flat two-tone lighting, halftone band along the shadow edge -->
+    <path class="fg-ear"  d="M180 206c-17-4-27 8-24 25 3 18 14 28 26 29Z"/>
+    <path class="fg-neck" d="M231 306h60v86h-60Z"/>
+    <path class="fg-shade2" d="M231 306h60v24c-16 13-44 13-60 0Z"/>
+    <path class="fg-head" d="M176 204C176 130 213 96 261 96C309 96 346 130 346 204C346 256 332 296 306 322C292 337 277 347 261 347C245 347 230 337 216 322C190 296 176 256 176 204Z"/>
+    <path class="fg-shade" clip-path="url(#c-head)" d="M290 56H446V366H244C268 300 285 226 290 56Z"/>
+    <!-- narrow halftone band hugging the shadow edge: comic-book shading -->
+    <rect class="fg-dots" clip-path="url(#c-head)" mask="url(#m-dotfade)" x="254" y="96" width="38" height="172" fill="url(#p-halftone)" opacity=".8"/>
+    <!-- Minimal features: a knowing squint and a salesman's half-smile. Four
+         hand-plotted strokes, no eyes drawn open, nothing traced. -->
+    <g class="fg-face">
+      <path d="M212 252c10 7 21 7 30 0"/>
+      <path d="M282 252c10 7 21 7 30 0"/>
+      <path d="M283 288c6 4 10 5 15 4"/>
+      <path d="M243 306c14 10 32 5 40-9"/>
+    </g>
+    <!-- messy side-swept bangs: saw-tooth fringe, part left of centre -->
+    <path class="fg-hair" d="M164 248C154 130 186 58 252 58C334 58 380 140 368 226L352 176L326 234L314 172L282 240L268 170L234 230L218 176L190 236Z"/>
+    <path class="fg-hair2" d="M196 150C210 106 232 78 264 72C232 90 210 118 202 156Z"/>
+  </symbol>
+
   <symbol id="i-salt" viewBox="0 0 64 40">
     <g fill="currentColor">
       <circle cx="4" cy="30" r="3.2"/><circle cx="12" cy="24" r="2.4"/><circle cx="19" cy="31" r="1.6"/>
@@ -65,15 +140,20 @@
     <nav class="site-nav" aria-label="Sections of this page">
       <ul>
         <li><a href="#profile">Profile</a></li>
-        <li><a href="#who">Who He Is</a></li>
-        <li><a href="#personality">Personality</a></li>
+        <li><a href="#who" aria-label="Who He Is">Who</a></li>
+        <li><a href="#origin" aria-label="Origin Story">Origin</a></li>
+        <li><a href="#personality" aria-label="Personality Traits">Traits</a></li>
+        <li><a href="#look" aria-label="The Look">Look</a></li>
         <li><a href="#abilities">Abilities</a></li>
         <li><a href="#quotes">Quotes</a></li>
         <li><a href="#people">People</a></li>
         <li><a href="#arcs">Arcs</a></li>
+        <li><a href="#beyond" aria-label="Beyond the Series">Beyond</a></li>
       </ul>
     </nav>
   </div>
+  <!-- Reading-position bar. CSS scroll-driven; absent where unsupported. -->
+  <div class="scroll-progress" aria-hidden="true"><span></span></div>
 </header>
 
 <main id="main">
@@ -92,17 +172,12 @@
         <circle cx="200" cy="200" r="150" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="2 10" opacity=".55"/>
         <circle cx="200" cy="200" r="186" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="1 14" opacity=".35"/>
       </svg>
-      <!-- Abstract suit-and-tie figure: original geometry, no facial features. -->
-      <svg class="figure" viewBox="0 0 300 400" focusable="false">
-        <path class="fg-neck" d="M134 156h32v42h-32z"/>
-        <ellipse class="fg-head" cx="150" cy="112" rx="53" ry="63"/>
-        <path class="fg-hair" d="M96 118C92 62 118 40 152 40s56 26 54 82c-4-18-16-30-34-30-26 0-56 10-64 30-4-2-8-2-12-4Z"/>
-        <path class="fg-jacket" d="M150 184c-40 4-84 20-102 40-18 20-26 74-28 176h260c-2-102-10-156-28-176-18-20-62-36-102-40Z"/>
-        <path class="fg-shirt" d="M116 192 150 184l34 8-34 88Z"/>
-        <path class="fg-lapel" d="M116 192 150 184v22l-48 58-6-32Zm68 0L150 184v22l48 58 6-32Z"/>
-        <path class="fg-tie" d="M141 197h18l5 16h-28Z"/>
-        <path class="fg-tie2" d="M136 214h28l-7 92-7 14-7-14Z"/>
+      <svg class="figure" viewBox="0 0 520 700" focusable="false">
+        <circle class="fg-halo" cx="261" cy="205" r="176"/>
+        <circle class="fg-ring" cx="261" cy="205" r="205"/>
+        <use href="#i-figure" width="520" height="700"></use>
       </svg>
+      <svg class="hero__salt" viewBox="0 0 64 40" focusable="false"><use href="#i-salt"></use></svg>
     </div>
 
     <div class="hero__body">
@@ -125,7 +200,10 @@
 
       <p class="hero__note">
         Fan-made tribute page. Not affiliated with the creators of <cite>Mob Psycho 100</cite>.
-        All artwork here is original CSS&nbsp;/&nbsp;SVG &mdash; no official images are used.
+        All character artwork here &mdash; the portrait, the aura, the salt motifs &mdash; is
+        original CSS&nbsp;/&nbsp;SVG drawn for this page. The photographic backdrops are
+        CC0&nbsp;/ Unsplash-licensed stock textures, <a href="#credits">credited in the footer</a>.
+        No official <cite>Mob Psycho 100</cite> images are used.
       </p>
     </div>
 
@@ -134,7 +212,7 @@
 
   <div class="salt-rule" aria-hidden="true"></div>
 
-  <!-- ===================== PROFILE ===================== -->
+  <!-- ===================== 01 PROFILE ===================== -->
   <section id="profile" class="section" aria-labelledby="h-profile">
     <div class="section__head" data-reveal>
       <p class="section__num" aria-hidden="true">01</p>
@@ -149,20 +227,29 @@
         <caption class="visually-hidden">Identity and production details for Reigen Arataka</caption>
         <tbody role="rowgroup">
           <tr role="row"><th role="rowheader" scope="row">Name</th><td role="cell">Reigen Arataka <span class="t-ja" lang="ja">霊幻新隆</span></td></tr>
-          <tr role="row"><th role="rowheader" scope="row">Age</th><td role="cell">28</td></tr>
+          <tr role="row"><th role="rowheader" scope="row">Age</th><td role="cell">28&ndash;29 <span class="t-note">&mdash; sources differ</span></td></tr>
+          <tr role="row"><th role="rowheader" scope="row">Birthday</th><td role="cell">October&nbsp;10</td></tr>
+          <tr role="row"><th role="rowheader" scope="row">Height</th><td role="cell">179&nbsp;cm</td></tr>
           <tr role="row"><th role="rowheader" scope="row">Occupation</th><td role="cell">Owner and operator, Spirits and Such Consultation Office</td></tr>
           <tr role="row"><th role="rowheader" scope="row">Workplace</th><td role="cell">Spirits and Such Consultation Office &mdash; one small rented room</td></tr>
           <tr role="row"><th role="rowheader" scope="row">Affiliations</th><td role="cell">Mentor and employer to Mob (Shigeo Kageyama); works alongside Katsuya Serizawa</td></tr>
           <tr role="row"><th role="rowheader" scope="row">First appearance (manga)</th><td role="cell">Chapter&nbsp;1</td></tr>
           <tr role="row"><th role="rowheader" scope="row">First appearance (anime)</th><td role="cell">Season&nbsp;1, Episode&nbsp;1 &mdash; &ldquo;Self-Proclaimed Psychic: Reigen Arataka ~And Mob~&rdquo; (July&nbsp;2016)</td></tr>
           <tr role="row"><th role="rowheader" scope="row">Japanese voice</th><td role="cell">Takahiro Sakurai</td></tr>
+          <tr role="row"><th role="rowheader" scope="row">English voice</th><td role="cell">Chris Niosi</td></tr>
         </tbody>
       </table>
     </div>
+
+    <p class="fine-print fine-print--wide" data-reveal>
+      Age is given as 28 by the series wiki and as 29 by MyAnimeList, so both are shown rather
+      than one being picked. The height comes from MyAnimeList only; no second source was found
+      for it.
+    </p>
   </section>
 
-  <!-- ===================== WHO HE IS ===================== -->
-  <section id="who" class="section section--who" aria-labelledby="h-who">
+  <!-- ===================== 02 WHO HE IS ===================== -->
+  <section id="who" class="section section--bleed section--who tex" aria-labelledby="h-who">
     <div class="section__head" data-reveal>
       <p class="section__num" aria-hidden="true">02</p>
       <h2 id="h-who">Who He Is</h2>
@@ -196,10 +283,49 @@
     </div>
   </section>
 
-  <!-- ===================== PERSONALITY ===================== -->
-  <section id="personality" class="section" aria-labelledby="h-personality">
+  <!-- ===================== 03 ORIGIN STORY ===================== -->
+  <section id="origin" class="section section--bleed section--origin tex" aria-labelledby="h-origin">
     <div class="section__head" data-reveal>
       <p class="section__num" aria-hidden="true">03</p>
+      <h2 id="h-origin">Origin Story</h2>
+      <p class="section__lede">Before the office, there was a desk he could not stand.</p>
+    </div>
+
+    <div class="origin">
+      <div class="prose" data-reveal>
+        <p class="prose__drop">
+          He started out a salaryman at an ordinary company. Nothing paranormal, nothing spiritual
+          &mdash; regular work at a regular firm. He quit because he was bored, and because he
+          disliked the job.
+        </p>
+        <p>
+          Roughly four years before the story begins, he rented a small room and put a name on it:
+          Spirits and Such Consultation Office. There was no plan behind it. He took the room more
+          or less on impulse and started calling himself a psychic.
+        </p>
+        <p>
+          Then a middle-schooler turned up as a client, looking for help with powers he could not
+          switch off. Reigen &mdash; who has no powers at all &mdash; took the job.
+        </p>
+        <blockquote class="pull">
+          The business exists because a bored office worker walked out and rented a room. The most
+          consequential thing he ever did was answer the door to a kid he could not possibly help
+          in the way advertised.
+        </blockquote>
+      </div>
+
+      <div class="plaque" data-reveal>
+        <span class="plaque__mark" lang="ja" aria-hidden="true">霊</span>
+        <p class="plaque__name">Spirits and Such<br>Consultation Office</p>
+        <p class="plaque__meta">One rented room &middot; no business plan &middot; open about four years before the story starts</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 04 PERSONALITY ===================== -->
+  <section id="personality" class="section" aria-labelledby="h-personality">
+    <div class="section__head" data-reveal>
+      <p class="section__num" aria-hidden="true">04</p>
       <h2 id="h-personality">Personality</h2>
       <p class="section__lede">Six traits, pulling in different directions at once.</p>
     </div>
@@ -232,10 +358,67 @@
     </ul>
   </section>
 
-  <!-- ===================== ABILITIES ===================== -->
+  <!-- ===================== 05 THE LOOK ===================== -->
+  <section id="look" class="section section--bleed section--look" aria-labelledby="h-look">
+    <div class="section__head" data-reveal>
+      <p class="section__num" aria-hidden="true">05</p>
+      <h2 id="h-look">The Look</h2>
+      <p class="section__lede">
+        The manga and the anime do not draw him the same way &mdash; and they do not quite write
+        him the same way either. Both figures below are this page&rsquo;s own drawing, recoloured.
+      </p>
+    </div>
+
+    <div class="compare">
+      <article class="ver ver--manga" data-reveal>
+        <p class="ver__tag">In the manga</p>
+        <div class="ver__art">
+          <svg class="ver__figure" viewBox="144 44 236 456" aria-hidden="true" focusable="false"><use href="#i-figure" width="520" height="700"></use></svg>
+        </div>
+        <h3>Brown hair, black tie</h3>
+        <ul class="swatches">
+          <!-- Swatches read the same custom properties that colour the figure
+               above, so a palette change can never desync the two. -->
+          <li><span class="sw" style="--sw:var(--fig-hair)"></span>Hair &mdash; brown</li>
+          <li><span class="sw" style="--sw:var(--fig-tie)"></span>Tie &mdash; black</li>
+        </ul>
+        <p class="ver__note">
+          Written more plainly as a manipulative con artist. The framing is more critical of him.
+        </p>
+      </article>
+
+      <p class="compare__vs" aria-hidden="true"><span>vs</span></p>
+
+      <article class="ver ver--anime" data-reveal>
+        <p class="ver__tag">In the anime</p>
+        <div class="ver__art">
+          <svg class="ver__figure ver__figure--flip" viewBox="144 44 236 456" aria-hidden="true" focusable="false"><use href="#i-figure" width="520" height="700"></use></svg>
+        </div>
+        <h3>Reddish-blond hair, pink tie</h3>
+        <ul class="swatches">
+          <li><span class="sw" style="--sw:var(--fig-hair)"></span>Hair &mdash; reddish-blond / golden</li>
+          <li><span class="sw" style="--sw:var(--fig-tie)"></span>Tie &mdash; pink</li>
+        </ul>
+        <p class="ver__note">
+          Warmer and more likeable. The bombast is toned down and the charm is pushed forward.
+        </p>
+      </article>
+    </div>
+
+    <div class="shared" data-reveal>
+      <h3>Shared by both versions</h3>
+      <ul class="tag-list">
+        <li>Dark brown eyes</li>
+        <li>Dark grey business suit</li>
+        <li>Messy side-swept bangs</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===================== 06 ABILITIES ===================== -->
   <section id="abilities" class="section section--abilities" aria-labelledby="h-abilities">
     <div class="section__head" data-reveal>
-      <p class="section__num" aria-hidden="true">04</p>
+      <p class="section__num" aria-hidden="true">06</p>
       <h2 id="h-abilities">What He Can Actually Do</h2>
       <p class="section__lede">
         Left column: real, verifiable, unglamorous. Right column: the show.
@@ -292,7 +475,7 @@
       </div>
 
       <!-- PERFORMED -->
-      <div class="panel panel--fake" data-reveal>
+      <div class="panel panel--fake tex" data-reveal>
         <p class="panel__tag">Theatre</p>
         <h3 class="panel__title">&ldquo;Techniques&rdquo;</h3>
         <p class="panel__intro">Branded, named, and announced at volume. All of it is stagecraft for the client&rsquo;s benefit.</p>
@@ -327,10 +510,10 @@
     </p>
   </section>
 
-  <!-- ===================== QUOTES ===================== -->
-  <section id="quotes" class="section section--quotes" aria-labelledby="h-quotes">
+  <!-- ===================== 07 QUOTES ===================== -->
+  <section id="quotes" class="section section--bleed section--quotes tex" aria-labelledby="h-quotes">
     <div class="section__head" data-reveal>
-      <p class="section__num" aria-hidden="true">05</p>
+      <p class="section__num" aria-hidden="true">07</p>
       <h2 id="h-quotes">In His Own Words</h2>
       <p class="section__lede">The fraud gives the best advice in the series.</p>
     </div>
@@ -348,12 +531,6 @@
 
       <figure class="quote" data-reveal>
         <svg class="quote__glyph" aria-hidden="true" focusable="false"><use href="#i-quote"></use></svg>
-        <blockquote><p>In the end, you&rsquo;re the one who&rsquo;s going to get hurt. When things go
-        south, it&rsquo;s ok to run away and save yourself!</p></blockquote>
-      </figure>
-
-      <figure class="quote" data-reveal>
-        <svg class="quote__glyph" aria-hidden="true" focusable="false"><use href="#i-quote"></use></svg>
         <blockquote><p>Being confident about your powers is fine, but you mustn&rsquo;t get conceited.
         Depending on how we use our powers, they can also be deadly weapons. They&rsquo;re just like
         knives.</p></blockquote>
@@ -361,8 +538,20 @@
 
       <figure class="quote" data-reveal>
         <svg class="quote__glyph" aria-hidden="true" focusable="false"><use href="#i-quote"></use></svg>
+        <blockquote><p>In the end, you&rsquo;re the one who&rsquo;s going to get hurt. When things go
+        south, it&rsquo;s ok to run away and save yourself!</p></blockquote>
+      </figure>
+
+      <!-- Deliberate diptych: the same idea, said twice, years apart. -->
+      <figure class="quote quote--pair" data-reveal>
+        <svg class="quote__glyph" aria-hidden="true" focusable="false"><use href="#i-quote"></use></svg>
         <blockquote><p>Your life is your own, and it&rsquo;s up to you to live it exactly the way you
         want.</p></blockquote>
+      </figure>
+
+      <figure class="quote quote--pair" data-reveal>
+        <svg class="quote__glyph" aria-hidden="true" focusable="false"><use href="#i-quote"></use></svg>
+        <blockquote><p>Your life is your own. It&rsquo;s okay to run away!</p></blockquote>
       </figure>
 
       <figure class="quote quote--short" data-reveal>
@@ -378,10 +567,10 @@
     </p>
   </section>
 
-  <!-- ===================== PEOPLE ===================== -->
+  <!-- ===================== 08 PEOPLE ===================== -->
   <section id="people" class="section" aria-labelledby="h-people">
     <div class="section__head" data-reveal>
-      <p class="section__num" aria-hidden="true">06</p>
+      <p class="section__num" aria-hidden="true">08</p>
       <h2 id="h-people">The People Around Him</h2>
       <p class="section__lede">One office, several strays.</p>
     </div>
@@ -395,10 +584,11 @@
         the spine of his whole character.</p>
       </li>
       <li class="rel" data-reveal>
-        <p class="rel__role">Colleague</p>
+        <p class="rel__role">Colleague &middot; deputy director</p>
         <h3>Katsuya Serizawa</h3>
-        <p>Comes to work at Spirits and Such alongside Reigen, as the office &mdash; and Reigen &mdash;
-        get put back together on a healthier footing.</p>
+        <p>Hired during the rebuild and made deputy director of the office. Reigen cut his hair
+        himself &mdash; a small nudge toward standing on his own. The habitual
+        &ldquo;Right, Serizawa?&rdquo; is Reigen fishing for backup.</p>
       </li>
       <li class="rel" data-reveal>
         <p class="rel__role">Uninvited</p>
@@ -419,17 +609,26 @@
         man for the one thing he has that powers can&rsquo;t buy.</p>
       </li>
       <li class="rel" data-reveal>
-        <p class="rel__role">Client, then friend</p>
+        <p class="rel__role">Never actually hired</p>
         <h3>Tome Kurata</h3>
-        <p>Arrives as business and stays as a fixture in the orbit of the office.</p>
+        <p>She was never taken on. She installed herself as unpaid secretary and simply kept turning
+        up until it counted as a job. By the end the two of them needle each other like colleagues.</p>
+      </li>
+      <li class="rel" data-reveal>
+        <p class="rel__role">Client</p>
+        <h3>Tsubomi Takane</h3>
+        <p>Came to the office as a client with a friend and tested his credibility with a trick
+        question. Reigen spotted Mob&rsquo;s photo on his own &ldquo;satisfied customers&rdquo; board
+        during the visit. No romantic angle on his side &mdash; he simply respected what she meant
+        to Mob.</p>
       </li>
     </ul>
   </section>
 
-  <!-- ===================== ARCS ===================== -->
-  <section id="arcs" class="section section--arcs" aria-labelledby="h-arcs">
+  <!-- ===================== 09 ARCS ===================== -->
+  <section id="arcs" class="section section--bleed section--arcs tex" aria-labelledby="h-arcs">
     <div class="section__head" data-reveal>
-      <p class="section__num" aria-hidden="true">07</p>
+      <p class="section__num" aria-hidden="true">09</p>
       <h2 id="h-arcs">Story Arcs</h2>
       <p class="section__lede">
         The first two are spoiler-free. Everything after is folded away &mdash; open only what you
@@ -462,10 +661,13 @@
           <div class="spoiler__body">
             <p class="arc__when">Separation</p>
             <h3>Rock bottom</h3>
-            <p>A public scandal drives Reigen and Mob apart. The press and public opinion turn on
-            him, and he ends up isolated and out of work. Stripped of the act, he has to look at how
-            hollow his life had become &mdash; and how much of it he had been outsourcing to a
-            fourteen-year-old.</p>
+            <p>A public scandal and an online pile-on drive Reigen and Mob apart &mdash; the split
+            following Reigen being dismissive about Mob&rsquo;s social life. The press and public
+            opinion turn on him and he ends up isolated and out of work. Stripped of the act, he has
+            to look at how hollow his life had become without the kid in it, and how much of it he
+            had been outsourcing to a fourteen-year-old.</p>
+            <p>Second season episodes six and seven are widely treated as <em>his</em> arc
+            specifically rather than Mob&rsquo;s.</p>
           </div>
         </details>
       </li>
@@ -479,9 +681,10 @@
           <div class="spoiler__body">
             <p class="arc__when">Reunion &amp; rebuild</p>
             <h3>Doing it properly</h3>
-            <p>Reigen and Mob reconcile. He reassesses how he has been living, brings Serizawa in,
-            and puts Spirits and Such back together on an honest footing &mdash; choosing actual
-            self-improvement over another, better lie.</p>
+            <p>Reigen and Mob reconcile. He reassesses how he has been living, brings Serizawa in as
+            a stabilising presence, and puts Spirits and Such back together on healthier terms
+            &mdash; choosing actual self-improvement over another, better lie. Still a bad boss.
+            Visibly a caring one.</p>
           </div>
         </details>
       </li>
@@ -495,25 +698,60 @@
           <div class="spoiler__body">
             <p class="arc__when">Finale</p>
             <h3>The measure of him</h3>
-            <p>In the climactic confrontation Reigen is support, not spectacle. He never acquires a
-            single power. His arc resolves instead into something rarer in this genre: a stable,
-            caring adult that Mob can actually rely on.</p>
+            <p>In the climactic confrontation Reigen is support, not spectacle. While fused with
+            Mob&rsquo;s power he briefly gains the ability to see spirits &mdash; borrowed, and
+            temporary. He never acquires a power of his own. His arc resolves instead into something
+            rarer in this genre: a stable, caring adult that Mob can actually rely on.</p>
           </div>
         </details>
       </li>
     </ol>
 
     <p class="fine-print fine-print--wide" data-reveal>
-      Arcs are listed in order of occurrence. Exact episode and chapter ranges are not stated here
-      because public sources did not confirm them consistently.
+      Arcs are listed in order of occurrence. Chapter ranges are not given, and the only episode
+      range stated is the one sources agree on &mdash; season two, episodes six and seven.
     </p>
+  </section>
+
+  <!-- ===================== 10 BEYOND THE SERIES ===================== -->
+  <section id="beyond" class="section section--bleed section--beyond tex" aria-labelledby="h-beyond">
+    <div class="section__head" data-reveal>
+      <p class="section__num" aria-hidden="true">10</p>
+      <h2 id="h-beyond">Beyond The Series</h2>
+      <p class="section__lede">Three things that happened outside the story itself.</p>
+    </div>
+
+    <ul class="notes">
+      <li class="note" data-reveal>
+        <p class="note__tag">Spin-off</p>
+        <h3>He got a manga of his own</h3>
+        <p><cite>Reigen: The Man With a MAX Spirituality Level of 131</cite> &mdash; a one-volume
+        anthology of short horror-comedy stories built around him. It ran on the MangaONE app from
+        19&nbsp;March 2018, and Dark Horse Comics released the English edition on
+        15&nbsp;December 2020.</p>
+      </li>
+      <li class="note" data-reveal>
+        <p class="note__tag">Fandom</p>
+        <h3>The most-favourited character</h3>
+        <p>On MyAnimeList he is the most-favourited character in <cite>Mob Psycho 100</cite> &mdash;
+        ahead of Mob himself. No count is printed here on purpose: the number moves constantly, and
+        anything committed to this page would be stale within the week.</p>
+      </li>
+      <li class="note" data-reveal>
+        <p class="note__tag">Voice</p>
+        <h3>The actor behind the bluster</h3>
+        <p>Takahiro Sakurai, who voices him in Japanese, is a heavily awarded performer &mdash; the
+        Overseas Fans Award at the 6th Seiyu Awards in 2012 and the Personality Award at the 16th in
+        2022, among others. Those awards belong to the actor, not to the character.</p>
+      </li>
+    </ul>
   </section>
 
 </main>
 
 <div class="salt-rule" aria-hidden="true"></div>
 
-<footer class="site-footer">
+<footer class="site-footer tex">
   <div class="site-footer__inner">
     <section class="disclaimer" aria-labelledby="h-disclaimer">
       <h2 id="h-disclaimer">Disclaimer</h2>
@@ -528,10 +766,18 @@
         All rights in the series belong to them.
       </p>
       <p>
-        No official artwork, screenshots, character images or logos are used anywhere on this page.
-        Every visual element here &mdash; the figure, the aura, the salt motifs, the meters &mdash; is
-        original CSS and SVG authored for this page. Quotations are short excerpts included for
-        commentary and identification.
+        <strong>No official artwork, screenshots, character images or logos are used anywhere on
+        this page.</strong> Every depiction of the character &mdash; the portrait, the recoloured
+        manga and anime figures, the aura, the salt motifs, the meters &mdash; is original CSS and
+        SVG drawn by hand for this page, and is a loose interpretation rather than a copy of any
+        official design.
+      </p>
+      <p>
+        The page also uses three <strong>photographic stock textures</strong> as low-opacity
+        backdrops &mdash; paper grain, a night skyline and an abstract bokeh field. They
+        are licensed under CC0 or the Unsplash License, contain nothing from the series, and are
+        credited individually under <a href="#credits">Image credits</a>.
+        Quotations are short excerpts included for commentary and identification.
       </p>
       <p>
         If you hold rights in the series and have any concern about this page, please get in touch
@@ -545,6 +791,8 @@
       <p class="sources__intro">Details on this page were compiled from:</p>
       <ul>
         <li><a href="https://mob-psycho-100.fandom.com/wiki/Arataka_Reigen" rel="noopener nofollow">Mob Psycho 100 Wiki &mdash; Arataka Reigen</a></li>
+        <li><a href="https://myanimelist.net/character/109931" rel="noopener nofollow">MyAnimeList &mdash; Arataka Reigen (age, height, birthday)</a></li>
+        <li><a href="https://mob-psycho-100.fandom.com/wiki/Reigen_(series)" rel="noopener nofollow">Mob Psycho 100 Wiki &mdash; the <cite>Reigen</cite> spin-off manga</a></li>
         <li><a href="https://gamerant.com/mob-psycho-100-who-is-reigen/" rel="noopener nofollow">GameRant &mdash; Who is Arataka Reigen?</a></li>
         <li><a href="https://gamerant.com/mob-psycho-100-main-characters-age-height-birthday/" rel="noopener nofollow">GameRant &mdash; Main characters&rsquo; age, height &amp; birthday</a></li>
         <li><a href="https://www.behindthevoiceactors.com/tv-shows/Mob-Psycho-100/" rel="noopener nofollow">Behind The Voice Actors &mdash; Mob Psycho 100 cast</a></li>
@@ -555,8 +803,42 @@
         <li><a href="https://otakukart.com/best-quotes-by-reigen-arataka-from-mob-psycho-100/" rel="noopener nofollow">OtakuKart &mdash; Best Reigen Arataka quotes</a></li>
       </ul>
       <p class="fine-print">
-        Claims that sources disagreed on, or that could not be verified, were left off this page
-        rather than published as fact.
+        Claims that sources disagreed on were shown as disputed rather than resolved, and claims
+        that could not be verified were left off this page rather than published as fact.
+      </p>
+    </section>
+
+    <section class="credits" id="credits" aria-labelledby="h-credits">
+      <h2 id="h-credits">Image credits</h2>
+      <p class="sources__intro">
+        The three photographic textures used as section backdrops. Nothing here depicts the series.
+      </p>
+      <ul>
+        <li>
+          <span class="credits__what">Aged paper</span>
+          <span class="credits__who">&ldquo;Paper002 4K Color&rdquo; by <a href="https://ambientcg.com" rel="noopener nofollow">ambientCG (Lennart Demes)</a> &middot;
+          <a href="https://creativecommons.org/publicdomain/zero/1.0/" rel="noopener nofollow">CC0&nbsp;1.0</a> &middot;
+          <a href="https://commons.wikimedia.org/wiki/File:Paper002_4K_Color.jpg" rel="noopener nofollow">source</a></span>
+        </li>
+        <li>
+          <span class="credits__what">Night skyline</span>
+          <span class="credits__who">by <a href="https://unsplash.com/@theordinarymoments" rel="noopener nofollow">The Ordinary Moments</a> &middot;
+          <a href="https://unsplash.com/license" rel="noopener nofollow">Unsplash License</a> &middot;
+          <a href="https://unsplash.com/photos/city-skyline-illuminated-at-night-with-a-dark-blue-sky-1G7oszlOqcM" rel="noopener nofollow">source</a></span>
+        </li>
+        <li>
+          <span class="credits__what">Bokeh &amp; dust</span>
+          <span class="credits__who">by <a href="https://unsplash.com/@ranamia" rel="noopener nofollow">Rana Mia</a> &middot;
+          <a href="https://unsplash.com/license" rel="noopener nofollow">Unsplash License</a> &middot;
+          <a href="https://unsplash.com/photos/abstract-bokeh-lights-and-dust-particles-Lh9Jqm2-z7Y" rel="noopener nofollow">source</a></span>
+        </li>
+      </ul>
+      <p class="fine-print">
+        All three were downscaled and recompressed for this page, then composited at low opacity
+        behind the layout. The paper tile is greyscale and keeps only the fine detail of its
+        original &mdash; the flat tone was subtracted, so what remains is grain that can actually be
+        seen on a near-black page. The skyline and bokeh fields are used as photographs,
+        desaturated in CSS.
       </p>
     </section>
   </div>
